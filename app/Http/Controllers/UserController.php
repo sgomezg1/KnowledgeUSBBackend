@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\ModelNotFoundException as ModelNotFoundException;
 
 class UserController extends Controller
 {
@@ -58,11 +60,19 @@ class UserController extends Controller
         }
     }
 
-    public function aceptarPoliticas(Request $request)
+    public function aceptarPoliticas($id)
     {
-        $user = $this->user($request);
-        if ($user) {
-            dd($user);
+        try {
+            $user = User::findOrFail($id);
+            if (!$user->acepta_politica) {
+                $user->acepta_politica = true;
+                $user->save();
+            }
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error_code' => 'NO_EXISTING_USER',
+                'mensaje'   => 'El usuario que acepta la política de tratamiento de datos no existe en nuestro sistema.'
+            ], 400);
         }
     }
 

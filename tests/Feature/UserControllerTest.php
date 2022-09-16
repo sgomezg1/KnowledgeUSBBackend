@@ -28,4 +28,11 @@ class UserControllerTest extends TestCase
         ]);
         $response->assertStatus(200);
     }
+
+    /** @test */
+    public function it_can_accept_privacy_policy()
+    {
+        $response = $this->get('/api/auth/aceptar-politicas/1');
+        $response->assertStatus(200);
+    }
 }

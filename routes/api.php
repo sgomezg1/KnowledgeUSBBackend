@@ -20,7 +20,7 @@ Route::group([
 ], function () {
     Route::post('prevLogin', [UserController::class, 'prevLogin']);
     Route::post('login', [UserController::class, 'login']);
-    Route::post('aceptar-politica', [UserController::class, 'aceptarPoliticas']);
+    Route::get('aceptar-politicas/{id}', [UserController::class, 'aceptarPoliticas']);
 
     Route::group([
       'middleware' => 'auth:api'
