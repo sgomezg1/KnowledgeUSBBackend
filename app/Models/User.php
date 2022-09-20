@@ -29,7 +29,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password'
+        'password',
+        'pivot'
     ];
 
     public function tipoUsuarios()

@@ -11,6 +11,10 @@ class TipoUsuarios extends Model
 
     public $timestamps = false;
 
+    protected $hidden = [
+        'pivot'
+    ];
+
     public function usuarios()
     {
         return $this->belongsToMany(User::class, null, 'usuarios', 'tipo_usuario', 'usuario');

@@ -20,11 +20,11 @@ Route::group([
 ], function () {
     Route::post('prevLogin', [UserController::class, 'prevLogin']);
     Route::post('login', [UserController::class, 'login']);
-    Route::get('aceptar-politicas/{id}', [UserController::class, 'aceptarPoliticas']);
-
+    
     Route::group([
-      'middleware' => 'auth:api'
+        'middleware' => 'auth:api'
     ], function() {
+        Route::get('aceptar-politicas/{id}', [UserController::class, 'aceptarPoliticas']);
         Route::get('logout', [UserController::class, 'logout']);
         Route::get('user', [UserController::class, 'user']);
     });
