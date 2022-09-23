@@ -37,4 +37,24 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(TipoUsuarios::class, 'usuarios', 'usuario', 'tipo_usuario');
     }
+
+    public function proyectosParticipa()
+    {
+        return $this->hasMany(Participantes::class, 'usuario_id');
+    }
+
+    public function clase()
+    {
+        return $this->hasMany(Clase::class, 'profesor');
+    }
+
+    public function facultadDecano()
+    {
+        return $this->hasOne(Facultad::class, 'decano');
+    }
+
+    public function facultadCoordinadorInvestigacion()
+    {
+        return $this->hasOne(Facultad::class, 'coor_inv');
+    }
 }

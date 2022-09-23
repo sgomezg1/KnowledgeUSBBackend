@@ -38,10 +38,15 @@ class DeleteUser extends Command
      */
     public function handle()
     {
-        $user = User::find($this->argument('userId'));
-        $user->tipoUsuarios()->detach();
-        $user->delete();
-        echo "Usuario creado eliminado exitosamente";
-        return 1;
+        $id = $this->ask('Por favor ingresa el ID del usuario a eliminar');
+        if (is_numeric($id) && $id > 0) {
+            $user = User::find($this->argument('userId'));
+            $user->tipoUsuarios()->detach();
+            $user->delete();
+            $this->info('Usuario creado eliminado exitosamente');
+            return 0;
+        } else {
+            $this->error('Debes ingresar un numero mayor a 0 para continuar');
+        }
     }
 }
