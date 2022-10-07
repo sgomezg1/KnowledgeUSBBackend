@@ -2,10 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ProgramaFactory extends Factory
+class PresupuestoFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -15,9 +14,7 @@ class ProgramaFactory extends Factory
     public function definition()
     {
         return [
-            'nombre' => $this->faker->name,
-            'facultad_id' => $this->faker->randomNumber(2),
-            'director' => User::with('tipoUsuarios')->where('id', 5)->first()->id
+            //
         ];
     }
 }

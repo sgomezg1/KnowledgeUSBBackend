@@ -18,8 +18,9 @@ class CreateSemilleroTable extends Migration
             $table->string('nombre', 45);
             $table->string('descripcion', 45);
             $table->date('fecha_fun');
-            $table->integer('grupo_investigacion');
-            $table->string('linea_investigacion');
+            $table->bigInteger('grupo_investigacion')->unsigned();
+            $table->bigInteger('lider_semillero')->unsigned();
+            $table->bigInteger('linea_investigacion')->unsigned();
             $table->timestamps();
         });
     }

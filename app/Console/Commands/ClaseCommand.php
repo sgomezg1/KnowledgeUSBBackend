@@ -14,7 +14,7 @@ class ClaseCommand extends Command
      */
     protected $signature = 'crear:clases
         { --cantidad=1 : Cantidad de roles a asignar }
-        { --facultad=  : de la facultad x}    
+        { --facultad=  : de la facultad x }    
     ';
 
     /**
@@ -45,7 +45,6 @@ class ClaseCommand extends Command
         $facultad = $this->option('facultad');
         if (!$facultad) {
             $this->error('Debes ingresar el ID de una facultad para crear las clases.\nVerifica las facultades en la base de datos.');
-            echo "";
             return 0;
         }
         Clase::factory($cantidad)->create();

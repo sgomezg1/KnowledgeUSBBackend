@@ -57,4 +57,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Facultad::class, 'coor_inv');
     }
+
+    public function grupoInvestigacion()
+    {
+        return $this->hasOne(GrupoInvestigacion::class, 'director_grupo');
+    }
 }

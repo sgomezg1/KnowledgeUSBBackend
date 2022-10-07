@@ -13,4 +13,9 @@ class Programa extends Model
     {
         return $this->belongsTo(Usuario::class);
     }
+
+    public function seminarios()
+    {
+        return $this->belongsToMany(Semillero::class, 'programas_semilleros', 'programa', 'semillero');
+    }
 }
