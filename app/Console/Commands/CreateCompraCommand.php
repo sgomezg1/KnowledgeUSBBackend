@@ -2,25 +2,28 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Comentario;
-use App\Models\Producto;
+use App\Models\Compra;
+use App\Models\Presupuesto;
 use Illuminate\Console\Command;
 
-class CreateComentarioCommand extends Command
+class CreateCompraCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'crear:compra
+        { --cantidad=: Cantidad de productos a crear }
+        { --presupuesto=: ID de presupuesto a asociar con la compra }
+    ';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Comando para crear compra nueva.\nNo olvides buscar un presupuesto en la base de datos.';
 
     /**
      * Create a new command instance.
@@ -40,20 +43,20 @@ class CreateComentarioCommand extends Command
     public function handle()
     {
         $cantidad = $this->option('cantidad');
-        $producto = $this->option('producto');
+        $presupuesto = $this->option('presupuesto');
         if (!is_numeric($cantidad) && $cantidad > 0) {
             $this->error('Debes ingresar un número valido para crear uno o más productos.');
             return 0;
         }
-        if (!Producto::where('id', $producto)->first()) {
+        if (!Presupuesto::where('id', $presupuesto)->first()) {
             $this->error('Debes ingresar un ID de producto valido.');
             return 0;
         }
 
-        Comentario::factory($cantidad)->create([
-            'producto_id' => $producto
+        Compra::factory($cantidad)->create([
+            'presupuesto' => $presupuesto
         ]);
-        $this->info("{$cantidad} Comentario(s) creado(s) exitosamente \nPor favor revisa la base de datos");
+        $this->info("{$cantidad} Compra(s) creado(s) exitosamente \nPor favor revisa la base de datos");
         return 0;
     }
 }

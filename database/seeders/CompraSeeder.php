@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Presupuesto;
+use App\Models\Compra;
 use Illuminate\Database\Seeder;
 
-class PresupuestoSeeder extends Seeder
+class CompraSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class PresupuestoSeeder extends Seeder
      */
     public function run()
     {
-        Presupuesto::factory(10)->create();
+        Compra::factory(10)->create();
     }
 }
