@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Participantes;
+use App\Models\Participante;
 use Illuminate\Console\Command;
 
 class ParticipantesCommand extends Command
@@ -39,7 +39,7 @@ class ParticipantesCommand extends Command
     public function handle()
     {
         $cantidad = $this->option('cantidad');
-        Participantes::factory($cantidad)->create();
+        Participante::factory($cantidad)->create();
         echo "{$cantidad} Participante(s) creado(s) exitosamente \nPor favor revisa la base de datos";
         return 0;
     }

@@ -23,16 +23,12 @@ class Usuario extends Model
 	use HasFactory;
 
 	protected $table = 'usuario';
+	protected $primaryKey = 'cedula';
 	public $incrementing = false;
 	public $timestamps = false;
 
-	public function tipo_usuario()
+	public function tipoUsuarios()
 	{
-		return $this->belongsTo(TipoUsuario::class, 'tipo_usuario');
-	}
-
-	public function usuario()
-	{
-		return $this->belongsTo(Usuario::class, 'usuario');
+		return $this->belongsToMany(TipoUsuario::class, 'usuarios', 'usuario', 'tipo_usuario');
 	}
 }

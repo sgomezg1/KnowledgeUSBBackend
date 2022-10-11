@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class MateriaFactory extends Factory
+class MateriumFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,7 +14,8 @@ class MateriaFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'catalogo' => $this->faker->word(),
+            'nombre' => $this->faker->name
         ];
     }
 }
