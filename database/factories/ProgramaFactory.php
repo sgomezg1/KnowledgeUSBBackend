@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Usuario;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProgramaFactory extends Factory
@@ -17,7 +17,7 @@ class ProgramaFactory extends Factory
         return [
             'nombre' => $this->faker->name,
             'facultad_id' => $this->faker->randomNumber(2),
-            'director' => User::with('tipoUsuarios')->where('id', 5)->first()->id
+            'director' => Usuario::with('tipoUsuarios')->where('id', 5)->first()->id
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\AreaConocimiento;
 use App\Models\AreaDeConocimiento;
 use Illuminate\Database\Seeder;
 
@@ -14,6 +15,6 @@ class AreaDeConocimientoSeeder extends Seeder
      */
     public function run()
     {
-        AreaDeConocimiento::factory(5)->create();
+        AreaConocimiento::factory(5)->create();
     }
 }

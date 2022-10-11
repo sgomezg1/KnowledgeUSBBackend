@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Usuario;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class FacultadFactory extends Factory
@@ -16,10 +16,10 @@ class FacultadFactory extends Factory
     {
         return [
             'nombre' => $this->faker->name,
-            'decano' => User::with('tipoUsuarios', function($query) {
+            'decano' => Usuario::with('tipoUsuarios', function($query) {
                 $query->where('id', '6');
             })->first()->id,
-            'coor_inv' => User::with('tipoUsuarios', function($query) {
+            'coor_inv' => Usuario::with('tipoUsuarios', function($query) {
                 $query->where('id', '3');
             })->first()->id,
             'created_at' => $this->faker->date('Y-m-d H:i:s', 'now')

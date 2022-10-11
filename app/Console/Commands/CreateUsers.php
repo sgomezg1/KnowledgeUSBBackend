@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Models\TipoUsuarios;
-use App\Models\User;
+use App\Models\TipoUsuario;
+use App\Models\Usuario;
 use Illuminate\Console\Command;
 
 class CreateUsers extends Command
@@ -41,8 +41,8 @@ class CreateUsers extends Command
     {
         $cantidad = $this->ask('¿Cuántos roles quieres asignar al usuario a crear?');
         if (is_numeric($cantidad) && $cantidad > 0) {
-            $roles = TipoUsuarios::all()->random($cantidad);
-            User::factory()->hasAttached($roles)->create();
+            $roles = TipoUsuario::all()->random($cantidad);
+            Usuario::factory()->hasAttached($roles)->create();
             $this->info("Usuario creado exitosamente con {$cantidad} roles\nPor favor revisa la base de datos.\nNo olvides que la contraseña siempre será 'password' para pruebas");
             return 0;
         } else {

@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Usuario;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ClaseFactory extends Factory
@@ -19,7 +19,7 @@ class ClaseFactory extends Factory
             'nombre' => $this->faker->name,
             'semestre' => $this->faker->randomNumber(1),
             'materia' => $this->faker->randomNumber(2),
-            'profesor' => User::inRandomOrder()->first()->id
+            'profesor' => Usuario::inRandomOrder()->first()->id
          ];
     }
 }

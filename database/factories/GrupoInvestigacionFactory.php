@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Usuario;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class GrupoInvestigacionFactory extends Factory
@@ -19,7 +19,7 @@ class GrupoInvestigacionFactory extends Factory
             'fecha_fun' => date('Y-m-d H:i:s'),
             'categoria' => $this->faker->name,
             'fecha_cat' => date('Y-m-d H:i:s'),
-            'director_grupo' => User::whereHas('tipoUsuarios', function($query) {
+            'director_grupo' => Usuario::whereHas('tipoUsuarios', function($query) {
                 $query->where('tipo_usuarios.id', '2');
             })->first()->id
         ];

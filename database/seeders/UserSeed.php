@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\TipoUsuarios;
-use App\Models\User;
+use App\Models\TipoUsuario;
+use App\Models\Usuario;
 use Illuminate\Database\Seeder;
 
 class UserSeed extends Seeder
@@ -15,10 +15,10 @@ class UserSeed extends Seeder
      */
     public function run()
     {
-        User::factory(10)->create()->each(function ($user) {
+        Usuario::factory(10)->create()->each(function ($user) {
             static $number = 1;
             if ($number == 10) {$number = 1;}
-            return $user->tipoUsuarios()->save( TipoUsuarios::find($number++) );
+            return $user->tipo_usuario()->save( TipoUsuario::find($number++) );
         });
     }
 }

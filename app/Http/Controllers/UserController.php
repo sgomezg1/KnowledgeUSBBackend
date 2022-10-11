@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
-use App\Models\User;
+use App\Models\Usuario;
 use Carbon\Carbon;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException as ModelNotFoundException;
@@ -80,7 +79,7 @@ class UserController extends Controller
     public function aceptarPoliticas($id)
     {
         try {
-            $user = User::findOrFail($id);
+            $user = Usuario::findOrFail($id);
             if (!$user->acepta_politica) {
                 $user->acepta_politica = true;
                 $user->save();

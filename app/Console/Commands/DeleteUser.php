@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\User;
+use App\Models\Usuario;
 use Illuminate\Console\Command;
 
 class DeleteUser extends Command
@@ -40,8 +40,8 @@ class DeleteUser extends Command
     {
         $id = $this->ask('Por favor ingresa el ID del usuario a eliminar');
         if (is_numeric($id) && $id > 0) {
-            $user = User::find($this->argument('userId'));
-            $user->tipoUsuarios()->detach();
+            $user = Usuario::find($this->argument('userId'));
+            $user->tipo_usuario()->detach();
             $user->delete();
             $this->info('Usuario creado eliminado exitosamente');
             return 0;

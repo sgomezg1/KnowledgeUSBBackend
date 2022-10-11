@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Facultad;
-use App\Models\User;
+use App\Models\Usuario;
 use Illuminate\Database\Seeder;
 
 class FacultadSeeder extends Seeder
@@ -18,38 +18,33 @@ class FacultadSeeder extends Seeder
         Facultad::insert([
             [
                 'nombre' => 'Psicología',
-                'decano' => User::with('tipoUsuarios')->where('id', 6)->first()->id,
-                'coor_inv' => User::with('tipoUsuarios')->where('id', 3)->first()->id,
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s')
+                'decano' => null,
+                'coor_inv' => null,
+
             ],
             [
                 'nombre' => 'Humanidades y Educación',
-                'decano' => User::with('tipoUsuarios')->where('id', 6)->first()->id,
-                'coor_inv' => User::with('tipoUsuarios')->where('id', 3)->first()->id,
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s')
+                'decano' => null,
+                'coor_inv' => null,
+
             ],
             [
                 'nombre' => 'Ingeniería',
-                'decano' => User::with('tipoUsuarios')->where('id', 6)->first()->id,
-                'coor_inv' => User::with('tipoUsuarios')->where('id', 3)->first()->id,
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s')
+                'decano' => null,
+                'coor_inv' => null,
+
             ],
             [
                 'nombre' => 'Ciencias Economicas',
-                'decano' => User::with('tipoUsuarios')->where('id', 6)->first()->id,
-                'coor_inv' => User::with('tipoUsuarios')->where('id', 3)->first()->id,
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s')
+                'decano' => null,
+                'coor_inv' => null,
+
             ],
             [
                 'nombre' => 'Ciencias Juridicas',
-                'decano' => User::with('tipoUsuarios')->where('id', 6)->first()->id,
-                'coor_inv' => User::with('tipoUsuarios')->where('id', 3)->first()->id,
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s')
+                'decano' => null,
+                'coor_inv' => null,
+
             ]
         ]);
     }

@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Facultad;
 use App\Models\Programa;
-use App\Models\User;
+use App\Models\Usuario;
 use Illuminate\Database\Seeder;
 
 class ProgramaSeeder extends Seeder
@@ -22,7 +22,7 @@ class ProgramaSeeder extends Seeder
             [
                 'nombre' => 'Psicología',
                 'facultad_id' => Facultad::where('nombre', 'Psicología')->first()->id,
-                'director' => User::with('tipoUsuarios')->where('id', 6)->first()->id
+                'director' => null
             ]
         );
 
@@ -33,22 +33,22 @@ class ProgramaSeeder extends Seeder
                 [
                     'nombre' => 'Licenciatura en Educación Infantil',
                     'facultad_id' => Facultad::where('nombre', 'Humanidades y Educación')->first()->id,
-                    'director' => User::with('tipoUsuarios')->where('id', 6)->first()->id
+                    'director' => null
                 ],
                 [
                     'nombre' => 'Licenciatura en Filosofía',
                     'facultad_id' => Facultad::where('nombre', 'Humanidades y Educación')->first()->id,
-                    'director' => User::with('tipoUsuarios')->where('id', 6)->first()->id
+                    'director' => null
                 ],
                 [
                     'nombre' => 'Licenciatura en Teología',
                     'facultad_id' => Facultad::where('nombre', 'Humanidades y Educación')->first()->id,
-                    'director' => User::with('tipoUsuarios')->where('id', 6)->first()->id
+                    'director' => null
                 ],
                 [
                     'nombre' => 'Licenciatura en Lengua Inglesa',
                     'facultad_id' => Facultad::where('nombre', 'Humanidades y Educación')->first()->id,
-                    'director' => User::with('tipoUsuarios')->where('id', 6)->first()->id
+                    'director' => null
                 ],
             ]
         );
@@ -60,32 +60,32 @@ class ProgramaSeeder extends Seeder
                 [
                     'nombre' => 'Ingeniería Aeronáutica',
                     'facultad_id' => Facultad::where('nombre', 'Ingeniería')->first()->id,
-                    'director' => User::with('tipoUsuarios')->where('id', 6)->first()->id
+                    'director' => null
                 ],
                 [
                     'nombre' => 'Ingeniería Electrónica',
                     'facultad_id' => Facultad::where('nombre', 'Ingeniería')->first()->id,
-                    'director' => User::with('tipoUsuarios')->where('id', 6)->first()->id
+                    'director' => null
                 ],
                 [
                     'nombre' => 'Ingeniería Mecatrónica',
                     'facultad_id' => Facultad::where('nombre', 'Ingeniería')->first()->id,
-                    'director' => User::with('tipoUsuarios')->where('id', 6)->first()->id
+                    'director' => null
                 ],
                 [
                     'nombre' => 'Ingeniería Multimedia',
                     'facultad_id' => Facultad::where('nombre', 'Ingeniería')->first()->id,
-                    'director' => User::with('tipoUsuarios')->where('id', 6)->first()->id
+                    'director' => null
                 ],
                 [
                     'nombre' => 'Ingeniería de Sistemas',
                     'facultad_id' => Facultad::where('nombre', 'Ingeniería')->first()->id,
-                    'director' => User::with('tipoUsuarios')->where('id', 6)->first()->id
+                    'director' => null
                 ],
                 [
                     'nombre' => 'Ingeniería de Sonido',
                     'facultad_id' => Facultad::where('nombre', 'Ingeniería')->first()->id,
-                    'director' => User::with('tipoUsuarios')->where('id', 6)->first()->id
+                    'director' => null
                 ]
             ]
         );
@@ -97,17 +97,17 @@ class ProgramaSeeder extends Seeder
                 [
                     'nombre' => 'Ciencia Política',
                     'facultad_id' => Facultad::where('nombre', 'Ciencias Juridicas')->first()->id,
-                    'director' => User::with('tipoUsuarios')->where('id', 6)->first()->id
+                    'director' => null
                 ],
                 [
                     'nombre' => 'Derecho',
                     'facultad_id' => Facultad::where('nombre', 'Ciencias Juridicas')->first()->id,
-                    'director' => User::with('tipoUsuarios')->where('id', 6)->first()->id
+                    'director' => null
                 ],
                 [
                     'nombre' => 'Relaciones Internacionales',
                     'facultad_id' => Facultad::where('nombre', 'Ciencias Juridicas')->first()->id,
-                    'director' => User::with('tipoUsuarios')->where('id', 6)->first()->id
+                    'director' => null
                 ]
             ]
         );

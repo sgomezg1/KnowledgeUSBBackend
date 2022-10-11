@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\LineasDeInvestigacion;
+use App\Models\LineaInvestigacion;
 use Illuminate\Database\Seeder;
 
 class LineasDeInvestigacionSeeder extends Seeder
@@ -14,6 +14,6 @@ class LineasDeInvestigacionSeeder extends Seeder
      */
     public function run()
     {
-        LineasDeInvestigacion::factory(25)->create();
+        LineaInvestigacion::factory(25)->create();
     }
 }

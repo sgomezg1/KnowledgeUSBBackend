@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Usuario;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ParticipantesFactory extends Factory
@@ -15,7 +15,7 @@ class ParticipantesFactory extends Factory
     public function definition()
     {
         return [
-            'usuario_id' => User::inRandomOrder()->first()->id,
+            'usuario_id' => Usuario::inRandomOrder()->first()->id,
             'proyecto' => $this->faker->randomNumber(3),
             'fecha_inicio' => $this->faker->date('Y-m-d', 'now'),
             'fecha_fin' => $this->faker->date('Y-m-d', 'now'),
