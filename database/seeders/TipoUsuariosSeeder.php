@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\TipoUsuarios;
+use App\Models\TipoUsuario;
 use Illuminate\Database\Seeder;
 
 class TipoUsuariosSeeder extends Seeder
@@ -15,7 +15,7 @@ class TipoUsuariosSeeder extends Seeder
     public function run()
     {
 
-        TipoUsuarios::insert([
+        TipoUsuario::insert([
             [
                 'nombre' => 'Administrador',
                 'descripcion' => ''

@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Models\TipoUsuarios;
-use App\Models\User;
+use App\Models\TipoUsuario;
+use App\Models\Usuario;
 use Illuminate\Console\Command;
 
 class CreateUsers extends Command
@@ -13,7 +13,7 @@ class CreateUsers extends Command
      *
      * @var string
      */
-    protected $signature = 'usuario:rol {--cantidadRoles=1 : Cantidad de roles a asignar}';
+    protected $signature = 'usuario:rol';
 
     /**
      * The console command description.
@@ -39,10 +39,14 @@ class CreateUsers extends Command
      */
     public function handle()
     {
-        $cantidad = $this->option('cantidadRoles');
-        $roles = TipoUsuarios::all()->random($cantidad);
-        User::factory()->hasAttached($roles)->create();
-        echo "Usuario creado exitosamente con {$cantidad} roles\nPor favor revisa la base de datos.\nNo olvides que la contraseña siempre será 'password' para pruebas";
-        return 0;
+        $cantidad = $this->ask('¿Cuántos roles quieres asignar al usuario a crear?');
+        if (is_numeric($cantidad) && $cantidad > 0) {
+            $roles = TipoUsuario::all()->random($cantidad);
+            Usuario::factory()->hasAttached($roles)->create();
+            $this->info("Usuario creado exitosamente con {$cantidad} roles\nPor favor revisa la base de datos.\nNo olvides que la contraseña siempre será 'password' para pruebas");
+            return 0;
+        } else {
+            $this->error('Debes ingresar un numero mayor a 0 para continuar');
+        }
     }
 }
