@@ -8,6 +8,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * Class Usuario
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class Usuario extends Model
+class Usuario extends Authenticatable
 {
 	use HasFactory;
 
@@ -30,5 +31,10 @@ class Usuario extends Model
 	public function tipoUsuarios()
 	{
 		return $this->belongsToMany(TipoUsuario::class, 'usuarios', 'usuario', 'tipo_usuario');
+	}
+
+	public function participaciones()
+	{
+		return $this->belongsToMany(Proyecto::class, 'participantes', 'usuario', 'proyecto');
 	}
 }

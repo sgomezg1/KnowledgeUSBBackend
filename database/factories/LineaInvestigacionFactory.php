@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class AreaDeConocimientoFactory extends Factory
+class LineaInvestigacionFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -15,8 +15,8 @@ class AreaDeConocimientoFactory extends Factory
     {
         return [
             'nombre' => $this->faker->name,
-            'gran_area' => $this->faker->sentence(2),
-            'descripcion' => $this->faker->sentence(3)
+            'descripcion' => $this->faker->sentence(5),
+            'fecha' => date('Y-m-d H:i:s')
         ];
     }
 }

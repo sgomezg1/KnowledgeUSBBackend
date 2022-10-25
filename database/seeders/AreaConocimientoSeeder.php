@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Convocatorium;
+use App\Models\AreaConocimiento;
 use Illuminate\Database\Seeder;
 
-class ConvocatoriaSeeder extends Seeder
+class AreaConocimientoSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class ConvocatoriaSeeder extends Seeder
      */
     public function run()
     {
-        Convocatorium::factory(10)->create();
+        AreaConocimiento::factory(5)->create();
     }
 }

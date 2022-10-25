@@ -14,7 +14,12 @@ class EventoFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'nombre' => $this->faker->name,
+            'fecha' => date('Y-m-d H:i:s'),
+            'entidad' => $this->faker->word,
+            'estado' => 'En curso',
+            'sitio_web' => $this->faker->word,
+            'url_memoria' => $this->faker->word
         ];
     }
 }

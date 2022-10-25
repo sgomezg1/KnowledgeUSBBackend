@@ -62,8 +62,8 @@ class Convocatorium extends Model
 		return $this->hasMany(DetalleConvocatorium::class, 'convocatoria_id');
 	}
 
-	public function proyectos_convocatoria()
+	public function proyectos()
 	{
-		return $this->hasMany(ProyectosConvocatorium::class, 'convocatoria');
+		return $this->belongsToMany(Proyecto::class, 'proyectos_convocatoria', 'convocatoria', 'proyectos');
 	}
 }

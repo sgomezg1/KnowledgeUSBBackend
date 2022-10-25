@@ -19,9 +19,7 @@ class GrupoInvestigacionFactory extends Factory
             'fecha_fun' => date('Y-m-d H:i:s'),
             'categoria' => $this->faker->name,
             'fecha_cat' => date('Y-m-d H:i:s'),
-            'director_grupo' => Usuario::whereHas('tipoUsuarios', function($query) {
-                $query->where('tipo_usuarios.id', '2');
-            })->first()->id
+            'director_grupo' => Usuario::with('tipoUsuarios')->whereHas('tipoUsuarios', function($q) {$q->where('tipo_usuario.nombre', 'Lider de grupo de investigacion'); } )->inRandomOrder()->first()->cedula
         ];
     }
 }

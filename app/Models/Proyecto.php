@@ -46,7 +46,7 @@ class Proyecto extends Model
 	use HasFactory;
 
 	protected $table = 'proyecto';
-	public $incrementing = false;
+	protected $primaryKey = 'id';
 	public $timestamps = false;
 
 	protected $casts = [
@@ -98,19 +98,19 @@ class Proyecto extends Model
 		return $this->hasMany(Antecedente::class, 'proyecto');
 	}
 
-	public function areas_conocimientos()
+	public function areaConocimientos()
 	{
-		return $this->hasMany(AreasConocimiento::class, 'proyecto');
+		return $this->belongsToMany(AreaConocimiento::class, 'areas_conocimiento', 'proyecto', 'area_conocimiento');
 	}
 
 	public function participaciones()
 	{
-		return $this->hasMany(Participacione::class, 'proyecto_id_proyecto');
+		return $this->belongsToMany(Evento::class, 'participaciones', 'proyecto_id_proyecto', 'evento_id');
 	}
 
 	public function participantes()
 	{
-		return $this->hasMany(Participante::class, 'proyecto');
+		return $this->belongsToMany(Usuario::class, 'participantes', 'proyecto', 'usuario');
 	}
 
 	public function presupuestos()
@@ -128,8 +128,8 @@ class Proyecto extends Model
 		return $this->belongsToMany(Clase::class, 'proyectos_clase', 'proyecto', 'clase');
 	}
 
-	public function proyectos_convocatoria()
+	public function convocatorias()
 	{
-		return $this->hasMany(ProyectosConvocatorium::class, 'proyectos');
+		return $this->belongsToMany(Convocatorium::class, 'proyectos_convocatoria', 'proyectos', 'convocatoria');
 	}
 }

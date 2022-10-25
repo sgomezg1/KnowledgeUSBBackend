@@ -23,7 +23,7 @@ class CreatePresupuestoCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Comando para crear presupuesto y asignarlo a un proyecto';
 
     /**
      * Create a new command instance.

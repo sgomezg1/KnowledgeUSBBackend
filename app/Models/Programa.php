@@ -66,7 +66,7 @@ class Programa extends Model
 		return $this->hasMany(ProgramasGruposInv::class, 'programa');
 	}
 
-	public function semilleros()
+	public function semillerosProgramas()
 	{
 		return $this->belongsToMany(Semillero::class, 'programas_semilleros', 'programa', 'semillero');
 	}

@@ -17,7 +17,7 @@ class ProductoFactory extends Factory
         return [
             'titulo_producto' => $this->faker->title,
             'tipo_producto' => $this->faker->word(1),
-            'url_repo' => $this->faker->url,
+            'url_repo' => 'https://source.unsplash.com/random/800x600',
             'fecha' => date('Y-m-d H:i:s'),
             'proyecto' => Proyecto::inRandomOrder()->first()->id
         ];

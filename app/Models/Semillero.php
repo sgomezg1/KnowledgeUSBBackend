@@ -70,7 +70,7 @@ class Semillero extends Model
 		return $this->belongsTo(Usuario::class, 'lider_semillero');
 	}
 
-	public function programas()
+	public function programasSemilleros()
 	{
 		return $this->belongsToMany(Programa::class, 'programas_semilleros', 'semillero', 'programa');
 	}

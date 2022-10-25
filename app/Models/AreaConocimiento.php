@@ -40,8 +40,8 @@ class AreaConocimiento extends Model
 		'descripcion'
 	];
 
-	public function areas_conocimientos()
+	public function proyectosAreaConocimientos()
 	{
-		return $this->hasMany(AreasConocimiento::class, 'area_conocimiento');
+		return $this->belongsToMany(Proyecto::class, 'areas_conocimiento', 'area_conocimiento', 'proyecto');
 	}
 }
