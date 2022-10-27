@@ -24,7 +24,7 @@ Route::group([
     Route::group([
         'middleware' => 'auth:api'
     ], function() {
-        Route::get('aceptar-politicas/{id}', [UserController::class, 'aceptarPoliticas']);
+        Route::post('aceptar-politicas', [UserController::class, 'aceptarPoliticas']);
         Route::get('logout', [UserController::class, 'logout']);
         Route::get('user', [UserController::class, 'user']);
     });

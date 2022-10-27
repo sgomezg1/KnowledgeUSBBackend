@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\Models\Usuario;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException as ModelNotFoundException;
+use Illuminate\Support\Facades\Http;
 use stdClass;
 
 class UserController extends Controller
@@ -51,7 +53,8 @@ class UserController extends Controller
         if ($user['success']) {
             $hayRol = false;
             foreach ($user['data']->tipoUsuarios as $u) {
-                $hayRol = ($u->id == $rolLogin) ? true : false;
+                $hayRol = ($u->nombre === $rolLogin) ? true : false;
+                if ($hayRol) break;
             }
             if (!$hayRol) {
                 return response()->json([
@@ -70,22 +73,25 @@ class UserController extends Controller
                 return response()->json([
                     'access_token' => $tokenResult->accessToken,
                     'token_type' => 'Bearer',
-                    'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString()
+                    'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString(),
+                    'politicas' => $request->user()->acepta_politicas
                 ], 200);
             }
         } else return $this->retornoCredencialesIncorrectas();
     }
 
-    public function aceptarPoliticas($id)
+    public function aceptarPoliticas(Request $request)
     {
         try {
-            $user = Usuario::findOrFail($id);
-            if (!$user->acepta_politica) {
-                $user->acepta_politica = true;
-                $user->save();
-                return response()->json([
-                    'mensaje' => 'Politica de tratamiento de datos aceptada'
-                ]);
+            $user = Usuario::where('correo_est', $request->email)->first();
+            if ($user) {
+                if (!$user->acepta_politicas) {
+                    $user->acepta_politicas = true;
+                    $user->save();
+                    return response()->json([
+                        'mensaje' => 'Politica de tratamiento de datos aceptada'
+                    ]);
+                }
             }
         } catch (ModelNotFoundException $e) {
             return response()->json([
@@ -93,6 +99,30 @@ class UserController extends Controller
                 'mensaje'   => 'El usuario que acepta la política de tratamiento de datos no existe en nuestro sistema.'
             ], 400);
         }
+    }
+
+    protected function solicitarTokenJWTRefresco($correo, $password) {
+        $client = \Laravel\Passport\Client::where('id', 2)->first();
+        $tokenJWT = Http::asForm()->post('http://localhost:8000/oauth/token', [
+            'grant_type' => 'password',
+            'client_id' => $client->id,
+            'client_secret' => $client->secret,
+            'username' => $correo,
+            'password' => $password
+        ]);
+        return $tokenJWT->json();
+    }
+
+    public function refrescarTokenExpirado(Request $request) {
+        $client = \Laravel\Passport\Client::where('id', 2)->first();
+        $tokenJWT = Http::asForm()->post('http://localhost:8000/oauth/token', [
+            'grant_type' => 'refresh_token',
+            'refresh_token' => $request->token,
+            'client_id' => $client->id,
+            'client_secret' => $client->secret,
+            'scope' => '',
+        ]);
+        return $tokenJWT->json();
     }
 
     public function user(Request $request)
