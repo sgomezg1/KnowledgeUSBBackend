@@ -53,6 +53,6 @@ class Evento extends Model
 
 	public function participaciones()
 	{
-		return $this->hasMany(Participacione::class);
+		return $this->belongsToMany(Proyecto::class, 'participaciones', 'evento_id', 'proyecto_id_proyecto');
 	}
 }

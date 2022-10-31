@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\GrupoInvestigacion;
+use App\Models\LineaInvestigacion;
 use App\Models\LineasDeInvestigacion;
 use App\Models\Semillero;
 use Illuminate\Console\Command;
@@ -58,19 +59,19 @@ class CreateSemilleroCommand extends Command
             $this->error('Debes ingresar un número valido para asignar el grupo de investigación.');
             return 0;
         }
-        $lineaInvestigacion = $this->ask('Ingresa el ID de la linea de investigación a asignar.');
+        $lineaInvestigacion = $this->ask('Ingresa el nombre de la linea de investigación a asignar.');
 
-        if (!is_numeric($lineaInvestigacion) && $lineaInvestigacion > 0) {
-            $this->error('Debes ingresar un número valido para asignar la linea de investigación.');
+        if (!$lineaInvestigacion) {
+            $this->error('Debes ingresar un nombre valido para asignar la linea de investigación.');
             return 0;
         }
 
-        if (!LineasDeInvestigacion::where('id', $lineaInvestigacion)->first()) {
+        if (LineaInvestigacion::where('nombre', $lineaInvestigacion)->count() == 0) {
             $this->error('No existe la linea de investigacion a asignar.');
             return 0;
         }
 
-        if (!GrupoInvestigacion::where('id', $lineaInvestigacion)->first()) {
+        if (GrupoInvestigacion::where('id', $grupoInvestigacion)->count() == 0) {
             $this->error('No existe el grupo de investigación a asignar.');
             return 0;
         }

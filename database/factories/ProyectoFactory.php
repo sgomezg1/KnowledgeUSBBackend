@@ -30,9 +30,7 @@ class ProyectoFactory extends Factory
             'metodologia' => $this->faker->sentence(10),
             'conclusiones' => $this->faker->sentence(10),
             'justificacion' => $this->faker->sentence(10),
-            'tipo_proyecto' => TipoProyecto::inRandomOrder()->first()->id,
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
+            'tipo_proyecto' => TipoProyecto::inRandomOrder()->first()->nombre
         ];
     }
 }

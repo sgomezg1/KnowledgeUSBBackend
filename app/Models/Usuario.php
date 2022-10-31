@@ -8,6 +8,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Passport\HasApiTokens;
 
 /**
  * Class Usuario
@@ -18,9 +20,10 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class Usuario extends Model
+class Usuario extends Authenticatable
 {
 	use HasFactory;
+	use HasApiTokens;
 
 	protected $table = 'usuario';
 	protected $primaryKey = 'cedula';
@@ -31,4 +34,13 @@ class Usuario extends Model
 	{
 		return $this->belongsToMany(TipoUsuario::class, 'usuarios', 'usuario', 'tipo_usuario');
 	}
+
+	public function participaciones()
+	{
+		return $this->belongsToMany(Proyecto::class, 'participantes', 'usuario', 'proyecto');
+	}
+
+	public function SetPasswordAttribute($value){
+        $this->attributes['password'] = bcrypt($value);
+    }
 }

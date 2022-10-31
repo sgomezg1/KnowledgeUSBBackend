@@ -19,7 +19,7 @@ class ClaseFactory extends Factory
             'nombre' => $this->faker->name,
             'semestre' => $this->faker->randomNumber(1),
             'materia' => $this->faker->randomNumber(2),
-            'profesor' => Usuario::inRandomOrder()->first()->id
+            'profesor' => Usuario::with('tipoUsuarios')->whereHas('tipoUsuarios', function($q) {$q->where('tipo_usuario.nombre', 'Docente'); } )->inRandomOrder()->first()->cedula
          ];
     }
 }

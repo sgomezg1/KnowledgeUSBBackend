@@ -13,7 +13,7 @@ class CrearMateriaCommand extends Command
      * @var string
      */
     protected $signature = 'crear:materias
-        { --cantidad=1 : Cantidad de roles a asignar }
+        { --cantidad=1 : Cantidad de materias a crear }
         { --programa=  : ID del programa }
     ';
 

@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\AreaConocimiento;
-use App\Models\AreaDeConocimiento;
+use App\Models\Semillero;
 use Illuminate\Database\Seeder;
 
-class AreaDeConocimientoSeeder extends Seeder
+class SemilleroSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +14,6 @@ class AreaDeConocimientoSeeder extends Seeder
      */
     public function run()
     {
-        AreaConocimiento::factory(5)->create();
+        Semillero::factory(10)->create();
     }
 }

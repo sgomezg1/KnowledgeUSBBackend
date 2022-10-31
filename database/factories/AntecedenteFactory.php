@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\Proyecto;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class LineasDeInvestigacionFactory extends Factory
+class AntecedenteFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,9 +15,7 @@ class LineasDeInvestigacionFactory extends Factory
     public function definition()
     {
         return [
-            'nombre' => $this->faker->name,
-            'descripcion' => $this->faker->sentence(5),
-            'fecha' => date('Y-m-d H:i:s')
+            'proyecto' => Proyecto::inRandomOrder()->first()->id
         ];
     }
 }
