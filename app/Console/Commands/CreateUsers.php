@@ -39,14 +39,9 @@ class CreateUsers extends Command
      */
     public function handle()
     {
-        $cantidad = $this->ask('¿Cuántos roles quieres asignar al usuario a crear?');
-        if (is_numeric($cantidad) && $cantidad > 0) {
-            $roles = TipoUsuario::all()->random($cantidad);
-            Usuario::factory()->hasAttached($roles)->create();
-            $this->info("Usuario creado exitosamente con {$cantidad} roles\nPor favor revisa la base de datos.\nNo olvides que la contraseña siempre será 'password' para pruebas");
-            return 0;
-        } else {
-            $this->error('Debes ingresar un numero mayor a 0 para continuar');
-        }
+        $roles = TipoUsuario::all()->random(10);
+        Usuario::factory()->hasAttached($roles)->create();
+        $this->info("Usuario creado exitosamente con todos los roles\nPor favor revisa la base de datos.\nNo olvides que la contraseña siempre será 'password' para pruebas");
+        return 0;
     }
 }

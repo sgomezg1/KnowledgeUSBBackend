@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Materium;
 use Illuminate\Database\Seeder;
 
-class MateriaSeeder extends Seeder
+class MateriumSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,6 +14,6 @@ class MateriaSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Materium::factory(10)->create();
     }
 }

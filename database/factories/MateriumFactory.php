@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Programa;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MateriumFactory extends Factory
@@ -15,7 +16,8 @@ class MateriumFactory extends Factory
     {
         return [
             'catalogo' => $this->faker->word(),
-            'nombre' => $this->faker->name
+            'nombre' => $this->faker->name,
+            'programa' => Programa::inRandomOrder()->first()->id
         ];
     }
 }

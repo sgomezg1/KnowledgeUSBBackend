@@ -20,7 +20,7 @@ class UsuarioFactory extends Factory
             'cedula' => $this->faker->randomNumber(),
             'cod_universitario' => $this->faker->randomNumber(),
             'correo_est' => $this->faker->email(),
-            'contrasena' => bcrypt('password'), // password
+            'password' => 'password', // password
             'nombres' => $this->faker->name,
             'apellidos' => $this->faker->lastName(),
             'telefono' => $this->faker->phoneNumber,
