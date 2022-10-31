@@ -25,7 +25,7 @@ class CrearProyectoCommand extends Command
 
         { --semillero= : ID de semillero a asignar, no obligatorio }
         
-        { --tipoProyecto=1 }
+        { --tipoProyecto=1 : Asignar o no un tipo de proyecto. }
 
         { --areasConocimiento= : Cantidad de areas de conocimiento a asignar }
         

@@ -132,4 +132,19 @@ class Proyecto extends Model
 	{
 		return $this->belongsToMany(Convocatorium::class, 'proyectos_convocatoria', 'proyectos', 'convocatoria');
 	}
+
+	public function scopeWhereLike($query, $column, $value)
+	{
+		return $query->where($column, 'like', '%'. $value .'%');
+	}
+
+	public function facultad($query)
+	{
+		// return $query->
+	}
+
+	public function programa($query)
+	{
+
+	}
 }

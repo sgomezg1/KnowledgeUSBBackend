@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BuscadorProyectosController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,4 +29,12 @@ Route::group([
         Route::get('logout', [UserController::class, 'logout']);
         Route::get('user', [UserController::class, 'user']);
     });
+});
+
+Route::group([
+    'prefix' => 'proyectos',
+    'middleware' => 'auth:api'
+], function() {
+    Route::get('/', [BuscadorProyectosController::class, 'showProyectos']);
+    Route::get('/{id}', [BuscadorProyectosController::class, 'proyecto']);
 });
