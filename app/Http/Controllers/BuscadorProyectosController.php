@@ -16,10 +16,11 @@ class BuscadorProyectosController extends Controller
         }
 
         if ($request->estado) {
-            // $buscador->whereIn('estado', $request->estado);
+            $buscador->whereIn('estado', $request->estado);
         }
         
         if ($request->facultad) {
+            $buscador->innerJoin('');
             // $buscador->whereHas()
         }
 
@@ -28,13 +29,11 @@ class BuscadorProyectosController extends Controller
         }
 
         if ($request->areaConocimiento) {
-            /* $buscador->whereHas('areaConocimientos', function(Builder $q) use ($request) {
-                $q->whereIn('area_conocimiento.nombre', $request->areaConocimiento);
-            }); */
+            $buscador->with('areaConocimientos');
+            $buscador->whereHas('areaConocimientos', function(Builder $q) use ($request) {
+                $q->whereIn('areas_conocimiento.area_conocimiento', $request->areaConocimiento);
+            })->get();
         }
-
-        dd($buscador->get());
-
 
         return response()->json([
             'success' => true,
