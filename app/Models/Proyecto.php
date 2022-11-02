@@ -135,16 +135,6 @@ class Proyecto extends Model
 
 	public function scopeWhereLike($query, $column, $value)
 	{
-		return $query->where($column, 'like', '%'. $value .'%');
-	}
-
-	public function facultad($query)
-	{
-		// return $query->
-	}
-
-	public function programa($query)
-	{
-
+		return $query->where($column, 'like', '%' . $value . '%');
 	}
 }
