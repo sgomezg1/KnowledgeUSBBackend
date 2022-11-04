@@ -55,7 +55,6 @@ class BuscadorProyectosController extends Controller
                 'mensaje' => 'No hay resultados para esta búsqueda'
             ]);
         }
-        
     }
 
     public function proyecto($id) {
