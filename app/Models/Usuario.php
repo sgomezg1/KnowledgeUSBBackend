@@ -43,4 +43,9 @@ class Usuario extends Authenticatable
 	public function SetPasswordAttribute($value){
         $this->attributes['password'] = bcrypt($value);
     }
+
+	public function scopeWhereLike($query, $column, $value)
+	{
+		return $query->where($column, 'like', '%' . $value . '%');
+	}
 }

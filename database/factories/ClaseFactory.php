@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Materium;
 use App\Models\Usuario;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,7 +19,7 @@ class ClaseFactory extends Factory
             'numero' => $this->faker->randomNumber(5),
             'nombre' => $this->faker->name,
             'semestre' => $this->faker->randomNumber(1),
-            'materia' => $this->faker->randomNumber(2),
+            'materia' => Materium::inRandomOrder()->first()->catalogo,
             'profesor' => Usuario::with('tipoUsuarios')->whereHas('tipoUsuarios', function($q) {$q->where('tipo_usuario.nombre', 'Docente'); } )->inRandomOrder()->first()->cedula
          ];
     }
