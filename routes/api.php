@@ -44,6 +44,6 @@ Route::group([
     'prefix' => 'proyectos',
     'middleware' => 'auth:api'
 ], function() {
-    Route::get('/', [BuscadorProyectosController::class, 'showProyectos']);
+    Route::post('/', [BuscadorProyectosController::class, 'showProyectos']);
     Route::get('/{id}', [BuscadorProyectosController::class, 'proyecto']);
 });
