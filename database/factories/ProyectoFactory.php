@@ -18,7 +18,7 @@ class ProyectoFactory extends Factory
     {
         return [
             'titulo' => $this->faker->title,
-            'estado' => 'En Progreso',
+            'estado' => 'En Desarrollo',
             'descripcion' => $this->faker->sentence(3),
             'macro_proyecto' => MacroProyecto::inRandomOrder()->first()->id,
             'fecha_inicio' => date('Y-m-d H:i:s'),
