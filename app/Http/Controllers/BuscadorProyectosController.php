@@ -10,7 +10,19 @@ class BuscadorProyectosController extends Controller
 {
     public function showProyectos(Request $request)
     {
-        $buscador = Proyecto::select(['proyecto.*'])->with('participantes');
+        $buscador = Proyecto::select([
+            'proyecto.*',
+            'facultad.nombre as nombre_facultad',
+            'programa.nombre as nombre_programa'
+        ])->with([
+            'participantes',
+            'areaConocimientos'
+        ])->join('proyectos_clase', 'proyectos_clase.proyecto', 'proyecto.id')
+            ->join('clase', 'clase.numero', 'proyectos_clase.clase')
+            ->join('materia', 'materia.catalogo', 'clase.materia')
+            ->join('programa', 'programa.id', 'materia.programa')
+            ->join('facultad', 'facultad.id', 'programa.facultad_id');
+
         if ($request->titulo) {
             $buscador->whereLike('titulo', $request->titulo);
         }
@@ -19,26 +31,15 @@ class BuscadorProyectosController extends Controller
             $buscador->whereIn('estado', $request->estado);
         }
 
-        if ($request->facultad || $request->programa) {
-            $buscador->join('proyectos_clase', 'proyectos_clase.proyecto', 'proyecto.id')
-                ->join('clase', 'clase.numero', 'proyectos_clase.clase')
-                ->join('materia', 'materia.catalogo', 'clase.materia')
-                ->join('programa', 'programa.id', 'materia.programa');
-        }
-
         if ($request->facultad) {
-            $buscador->addSelect('facultad.nombre as nombre_facultad');
-            $buscador->join('facultad', 'facultad.id', 'programa.facultad_id')
-            ->whereIn('facultad.id', $request->facultad);
+            $buscador->whereIn('facultad.id', $request->facultad);
         }
         
         if ($request->programa) {
-            $buscador->addSelect('programa.nombre as nombre_programa');
             $buscador->whereIn('programa.id', $request->programa);
         }
 
         if ($request->areaConocimiento) {
-            $buscador->with('areaConocimientos');
             $buscador->whereHas('areaConocimientos', function (Builder $q) use ($request) {
                 $q->whereIn('areas_conocimiento.area_conocimiento', $request->areaConocimiento);
             })->get();
