@@ -52,6 +52,7 @@ class BuscadorProyectosController extends Controller
         } else {
             return response()->json([
                 'success' => false,
+                'proyectos' => [],
                 'mensaje' => 'No hay resultados para esta búsqueda'
             ]);
         }
