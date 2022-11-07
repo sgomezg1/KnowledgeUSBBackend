@@ -30,6 +30,13 @@ class Usuario extends Authenticatable
 	public $incrementing = false;
 	public $timestamps = false;
 
+	protected $hidden = [
+		'password',
+		'pivot',
+		'acepta_politicas',
+		'visibilidad'
+	];
+
 	public function tipoUsuarios()
 	{
 		return $this->belongsToMany(TipoUsuario::class, 'usuarios', 'usuario', 'tipo_usuario');

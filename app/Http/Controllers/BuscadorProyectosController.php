@@ -10,7 +10,7 @@ class BuscadorProyectosController extends Controller
 {
     public function showProyectos(Request $request)
     {
-        $buscador = Proyecto::select(['proyecto.*']);
+        $buscador = Proyecto::select(['proyecto.*'])->with('participantes');
         if ($request->titulo) {
             $buscador->whereLike('titulo', $request->titulo);
         }
