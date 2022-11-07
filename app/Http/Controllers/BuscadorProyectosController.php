@@ -34,7 +34,7 @@ class BuscadorProyectosController extends Controller
         if ($request->facultad) {
             $buscador->whereIn('facultad.id', $request->facultad);
         }
-        
+
         if ($request->programa) {
             $buscador->whereIn('programa.id', $request->programa);
         }
@@ -48,7 +48,7 @@ class BuscadorProyectosController extends Controller
         if ($buscador) {
             return response()->json([
                 'success' => true,
-                'proyectos' => $buscador->paginate()
+                'proyectos' => $buscador->get()
             ]);
         } else {
             return response()->json([
@@ -59,16 +59,27 @@ class BuscadorProyectosController extends Controller
         }
     }
 
-    public function proyecto($id) {
-        $consulta = Proyecto::with([
-            'macro_proyecto',
-            'semillero',
-            'tipo_proyecto',
-            'antecedentes',
-            'areaConocimientos',
-            'participantes',
-            'productos',
-        ])->where('id', $id)->first();
+    public function proyecto($id)
+    {
+        $consulta = Proyecto::select([
+            'proyecto.*',
+            'facultad.nombre as nombre_facultad',
+            'programa.nombre as nombre_programa'
+        ])->join('proyectos_clase', 'proyectos_clase.proyecto', 'proyecto.id')
+            ->join('clase', 'clase.numero', 'proyectos_clase.clase')
+            ->join('materia', 'materia.catalogo', 'clase.materia')
+            ->join('programa', 'programa.id', 'materia.programa')
+            ->join('facultad', 'facultad.id', 'programa.facultad_id')
+            ->with([
+                'macro_proyecto',
+                'semillero',
+                'tipo_proyecto',
+                'antecedentes',
+                'areaConocimientos',
+                'participantes',
+                'productos',
+                'presupuestos'
+            ])->where('proyecto.id', $id)->first();
         if ($consulta) {
             return response()->json([
                 'success' => true,
