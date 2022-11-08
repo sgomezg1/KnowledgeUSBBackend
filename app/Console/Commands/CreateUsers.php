@@ -39,7 +39,7 @@ class CreateUsers extends Command
      */
     public function handle()
     {
-        $roles = TipoUsuario::all()->random(10);
+        $roles = TipoUsuario::all();
         Usuario::factory()->hasAttached($roles)->create();
         $this->info("Usuario creado exitosamente con todos los roles\nPor favor revisa la base de datos.\nNo olvides que la contraseña siempre será 'password' para pruebas");
         return 0;
