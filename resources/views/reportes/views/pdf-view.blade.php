@@ -8,41 +8,44 @@
                 <th>Estado</th>
                 <th>Facultad</th>
                 <th>Programa</th>
-                <th>Estado</th>
-                {{-- @if ($data->estado === 'Finalizado') <th>Nota</th> @endif
-                @if (count($data->presupuestos) > 0) <th>Presupuestos</th> @endif --}}
+                @if (isset($finalizado) && $finalizado == true) <th>Nota</th> @endif
+                @if (isset($presupuestos) && $presupuestos == true)
+                    <th>Presupuesto Total</th>
+                @endif
             </thead>
             <tbody>
                 @foreach ($data as $d)
                     <tr>
-                        <td>
+                        <td width="16%">
                             <span class="texto-resultado">{{ $d->titulo }}</span>
                         </td>
-                        <td>
+                        <td width="16%">
                             <span class="texto-resultado">{{ $d->descripcion }}</span>
                         </td>
-                        <td>
+                        <td width="16%">
                             <span class="texto-resultado">{{ $d->estado }}</span>
                         </td>
-                        <td>
+                        <td width="16%">
                             <span class="texto-resultado">{{ $d->nombre_facultad }}</span>
                         </td>
-                        <td>
+                        <td width="16%">
                             <span class="texto-resultado">{{ $d->nombre_programa }}</span>
                         </td>
-                        <td>
-                            <span class="texto-resultado">{{ $d->estado }}</span>
-                        </td>
-                        {{--  @if ($data->estado === 'Finalizado')
-                    <td>
-
-                    </td>
-                    @endif
-                    @if (count($data->presupuestos) > 0)
-                    <td>
-
-                    </td>
-                    @endif --}}
+                        @if ($d->estado === 'Finalizado')
+                            <td width="16%">
+                                NOTA
+                            </td>
+                        @endif
+                        @if (isset($presupuestos) && $presupuestos == true)
+                            <td width="16%">
+                                @if ($d->presupuestos()->exists())
+                                    <span class="texto-resultado">$
+                                        {{ str_replace(',', '.', number_format($d->presupuestos()->sum('monto'))) }}</span>
+                                @else
+                                    <span class = "texto-resultado">NO DISPONIBLE</span>
+                                @endif
+                            </td>
+                        @endif
                     </tr>
                 @endforeach
             </tbody>

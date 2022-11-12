@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Proyecto;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class BuscadorProyectosController extends Controller
@@ -23,27 +22,7 @@ class BuscadorProyectosController extends Controller
             ->join('programa', 'programa.id', 'materia.programa')
             ->join('facultad', 'facultad.id', 'programa.facultad_id');
 
-        if ($request->titulo) {
-            $buscador->whereLike('titulo', $request->titulo);
-        }
-
-        if ($request->estado) {
-            $buscador->whereIn('estado', $request->estado);
-        }
-
-        if ($request->facultad) {
-            $buscador->whereIn('facultad.id', $request->facultad);
-        }
-
-        if ($request->programa) {
-            $buscador->whereIn('programa.id', $request->programa);
-        }
-
-        if ($request->areaConocimiento) {
-            $buscador->whereHas('areaConocimientos', function (Builder $q) use ($request) {
-                $q->whereIn('areas_conocimiento.area_conocimiento', $request->areaConocimiento);
-            })->get();
-        }
+        $busqueda = FilterQueriesController::retornarFiltros($buscador, $request);
 
         if ($buscador) {
             return response()->json([
