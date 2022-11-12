@@ -17,7 +17,3 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/datos-genera-reporte', [ReportesController::class, 'getDataUsuarioGeneraReporte']);
-Route::get('/generar-pdf', [ReportesController::class, 'generarReportes']);
-Route::get('/test-vista-pdf', [ReportesController::class, 'getVistaReportes']);
