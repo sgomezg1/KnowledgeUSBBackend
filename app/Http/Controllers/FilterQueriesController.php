@@ -77,9 +77,11 @@ class FilterQueriesController extends Controller
                 $q->whereIn('areas_conocimiento.area_conocimiento', $request->areaConocimiento);
             })->get();
         }
+
+        return $busqueda;
     }
 
-    public function retornarFiltrosSinFacultad($busqueda, Request $request)
+    public static function retornarFiltrosSinFacultad($busqueda, Request $request)
     {
         if ($request->estado) {
             $busqueda->whereIn('estado', $request->estado);
@@ -94,5 +96,7 @@ class FilterQueriesController extends Controller
                 $q->whereIn('areas_conocimiento.area_conocimiento', $request->areaConocimiento);
             })->get();
         }
+
+        return $busqueda;
     }
 }

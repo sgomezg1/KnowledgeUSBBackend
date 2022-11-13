@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Proyecto;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
 
 class ReportesController extends Controller
@@ -21,7 +22,8 @@ class ReportesController extends Controller
             ->join('clase', 'clase.numero', 'proyectos_clase.clase')
             ->join('materia', 'materia.catalogo', 'clase.materia')
             ->join('programa', 'programa.id', 'materia.programa')
-            ->join('facultad', 'facultad.id', 'programa.facultad_id');
+            ->join('facultad', 'facultad.id', 'programa.facultad_id')
+            ->groupBy('proyecto.id', 'nombre_facultad', 'nombre_programa');;
 
         $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request);
         $datosMostrar = array(
@@ -29,7 +31,7 @@ class ReportesController extends Controller
             'semillero' => false,
             'convocatorias' => false,
         );
-        return $this->retornoRespuestaReporte($busqueda, 'PROYECTOS CON PRESUPUESTO ASIGNADO', $request->rol, 'reporte_proyectos_por_convocatoria_' . date('Y_m_d_h_i_s'), $datosMostrar);
+        return $this->retornoRespuestaReporte($busqueda, 'PROYECTOS CON PRESUPUESTO ASIGNADO', $request->rol, 'reporte_proyectos_presupuesto_asignado_' . date('Y_m_d_h_i_s'), $datosMostrar);
     }
 
     public function proyectosPorConvocatoria(Request $request)
@@ -43,7 +45,8 @@ class ReportesController extends Controller
             ->join('clase', 'clase.numero', 'proyectos_clase.clase')
             ->join('materia', 'materia.catalogo', 'clase.materia')
             ->join('programa', 'programa.id', 'materia.programa')
-            ->join('facultad', 'facultad.id', 'programa.facultad_id');
+            ->join('facultad', 'facultad.id', 'programa.facultad_id')
+            ->groupBy('proyecto.id', 'nombre_facultad', 'nombre_programa');;
 
         $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request);
         $datosMostrar = array(
@@ -65,7 +68,8 @@ class ReportesController extends Controller
             ->join('clase', 'clase.numero', 'proyectos_clase.clase')
             ->join('materia', 'materia.catalogo', 'clase.materia')
             ->join('programa', 'programa.id', 'materia.programa')
-            ->join('facultad', 'facultad.id', 'programa.facultad_id');
+            ->join('facultad', 'facultad.id', 'programa.facultad_id')
+            ->groupBy('proyecto.id', 'nombre_facultad', 'nombre_programa');;
 
         $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request);
         $datosMostrar = array(
@@ -79,17 +83,24 @@ class ReportesController extends Controller
     public function proyectosDeSemillero(Request $request)
     {
         $busqueda = Proyecto::select([
-            'proyecto.*',
+            'proyecto.id',
+            'proyecto.titulo',
+            'proyecto.estado',
+            'proyecto.descripcion',
+            'proyecto.titulo',
+            'proyecto.titulo',
             'facultad.nombre as nombre_facultad',
-            'programa.nombre as nombre_programa'
-        ])->join('proyectos_clase', 'proyectos_clase.proyecto', 'proyecto.id')
+            'programa.nombre as nombre_programa',
+            'semillero.nombre as nombre_semillero'
+        ])->join('semillero', 'semillero.id', 'proyecto.semillero')
+            ->join('proyectos_clase', 'proyectos_clase.proyecto', 'proyecto.id')
             ->join('clase', 'clase.numero', 'proyectos_clase.clase')
             ->join('materia', 'materia.catalogo', 'clase.materia')
             ->join('programa', 'programa.id', 'materia.programa')
             ->join('facultad', 'facultad.id', 'programa.facultad_id');
 
         $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request);
-        $busqueda->where('proyecto.semillero', '!=', null);
+        $busqueda->whereNotNull('proyecto.semillero');
         $datosMostrar = array(
             'presupuestos' => false,
             'semillero' => true,
@@ -108,13 +119,14 @@ class ReportesController extends Controller
             ->join('clase', 'clase.numero', 'proyectos_clase.clase')
             ->join('materia', 'materia.catalogo', 'clase.materia')
             ->join('programa', 'programa.id', 'materia.programa')
-            ->join('facultad', 'facultad.id', 'programa.facultad_id');
+            ->join('facultad', 'facultad.id', 'programa.facultad_id')
+            ->groupBy('proyecto.id', 'nombre_facultad', 'nombre_programa');
 
         $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request);
-        $busqueda->where('proyecto.tipo_proyecto', '!=', 'Proyecto de Aula');
+        $busqueda->where('proyecto.tipo_proyecto', '=', 'Proyecto de Aula');
         $datosMostrar = array(
-            'presupuestos' => true,
-            'nota' => false,
+            'presupuestos' => false,
+            'semillero' => false,
             'convocatorias' => false,
         );
         return $this->retornoRespuestaReporte($busqueda, 'PROYECTOS DE AULA', $request->rol, 'reporte_proyectos_de_aula_' . date('Y_m_d_h_i_s'), $datosMostrar);
@@ -130,13 +142,14 @@ class ReportesController extends Controller
             ->join('clase', 'clase.numero', 'proyectos_clase.clase')
             ->join('materia', 'materia.catalogo', 'clase.materia')
             ->join('programa', 'programa.id', 'materia.programa')
-            ->join('facultad', 'facultad.id', 'programa.facultad_id');
+            ->join('facultad', 'facultad.id', 'programa.facultad_id')
+            ->groupBy('proyecto.id', 'nombre_facultad', 'nombre_programa');
 
         $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request);
         $busqueda->where('proyecto.tipo_proyecto', 'Investigadores Independientes');
         $datosMostrar = array(
             'presupuestos' => false,
-            'nota' => false,
+            'semillero' => false,
             'convocatorias' => false,
         );
         return $this->retornoRespuestaReporte($busqueda, 'PROYECTOS DE INVESTIGADORES INDEPENDIENTES', $request->rol, 'reporte_proyectos_investigadores_independientes_' . date('Y_m_d_h_i_s'), $datosMostrar);
@@ -152,13 +165,14 @@ class ReportesController extends Controller
             ->join('clase', 'clase.numero', 'proyectos_clase.clase')
             ->join('materia', 'materia.catalogo', 'clase.materia')
             ->join('programa', 'programa.id', 'materia.programa')
-            ->join('facultad', 'facultad.id', 'programa.facultad_id');
+            ->join('facultad', 'facultad.id', 'programa.facultad_id')
+            ->groupBy('proyecto.id', 'nombre_facultad', 'nombre_programa');
 
         $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request);
         $busqueda->where('proyecto.tipo_proyecto', 'Trabajo de Grado');
         $datosMostrar = array(
             'presupuestos' => false,
-            'nota' => false,
+            'semillero' => false,
             'convocatorias' => false,
         );
         return $this->retornoRespuestaReporte($busqueda, 'PROYECTOS TRABAJO DE GRADO', $request->rol, 'reporte_proyectos_trabajo_de_grado_' . date('Y_m_d_h_i_s'), $datosMostrar);
@@ -174,16 +188,17 @@ class ReportesController extends Controller
             ->join('clase', 'clase.numero', 'proyectos_clase.clase')
             ->join('materia', 'materia.catalogo', 'clase.materia')
             ->join('programa', 'programa.id', 'materia.programa')
-            ->join('facultad', 'facultad.id', 'programa.facultad_id');
+            ->join('facultad', 'facultad.id', 'programa.facultad_id')
+            ->groupBy('proyecto.id', 'nombre_facultad', 'nombre_programa');
 
-        $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request);
+        $busqueda = FilterQueriesController::retornarFiltrosSinFacultad($busqueda, $request);
         $busqueda->where('facultad.id', $id);
         $datosMostrar = array(
             'presupuestos' => false,
-            'nota' => false,
+            'semillero' => false,
             'convocatorias' => false,
         );
-        return $this->retornoRespuestaReporte($busqueda, 'PROYECTOS DE FACULTAD', $request->rol, 'reporte_proyectos_investigadores_independientes_' . date('Y_m_d_h_i_s'), $datosMostrar);
+        return $this->retornoRespuestaReporte($busqueda, 'PROYECTOS DE FACULTAD', $request->rol, 'reporte_proyectos_por_facultad_' . date('Y_m_d_h_i_s'), $datosMostrar);
     }
 
     public function proyectosPorPrograma($id, Request $request)
@@ -196,16 +211,17 @@ class ReportesController extends Controller
             ->join('clase', 'clase.numero', 'proyectos_clase.clase')
             ->join('materia', 'materia.catalogo', 'clase.materia')
             ->join('programa', 'programa.id', 'materia.programa')
-            ->join('facultad', 'facultad.id', 'programa.facultad_id');
+            ->join('facultad', 'facultad.id', 'programa.facultad_id')
+            ->groupBy('proyecto.id', 'nombre_facultad', 'nombre_programa');
 
-        $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request);
+        $busqueda = FilterQueriesController::retornarFiltrosSinPrograma($busqueda, $request);
         $busqueda->where('programa.id', $id);
         $datosMostrar = array(
             'presupuestos' => false,
-            'nota' => false,
+            'semillero' => false,
             'convocatorias' => false,
         );
-        return $this->retornoRespuestaReporte($busqueda, 'PROYECTOS POR PROGRAMA', $request->rol, 'reporte_proyectos_investigadores_independientes_' . date('Y_m_d_h_i_s'), $datosMostrar);
+        return $this->retornoRespuestaReporte($busqueda, 'PROYECTOS POR PROGRAMA', $request->rol, 'reporte_proyectos_por_programa_' . date('Y_m_d_h_i_s'), $datosMostrar);
     }
 
     public function retornoRespuestaReporte($busqueda, $nombreReporte, $rolGeneraReporte, $nombreArchivoPdf, $arrDatosMostrar)

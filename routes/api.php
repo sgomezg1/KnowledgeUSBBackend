@@ -56,7 +56,7 @@ Route::group([
     Route::post('/presupuestos', [ReportesController::class, 'proyectosConPresupuesto']);
     Route::post('/convocatorias', [ReportesController::class, 'proyectosPorConvocatoria']);
     Route::post('/integrantes', [ReportesController::class, 'proyectosRequierenIntegrantes']);
-    Route::post('/semillero', [ReportesController::class, 'proyectosRequierenIntegrantes']);
+    Route::post('/semillero', [ReportesController::class, 'proyectosDeSemillero']);
     Route::post('/investigadores-independientes', [ReportesController::class, 'proyectosInvestigadoresIndependientes']);
     Route::post('/trabajo-de-grado', [ReportesController::class, 'proyectosTrabajoDeGrado']);
     Route::post('/facultad/{id}', [ReportesController::class, 'proyectosPorFacultad']);

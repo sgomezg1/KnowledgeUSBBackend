@@ -22,7 +22,7 @@ class BuscadorProyectosController extends Controller
             ->join('programa', 'programa.id', 'materia.programa')
             ->join('facultad', 'facultad.id', 'programa.facultad_id');
 
-        $busqueda = FilterQueriesController::retornarFiltros($buscador, $request);
+        $buscador = FilterQueriesController::retornarFiltros($buscador, $request);
 
         if ($buscador) {
             return response()->json([
