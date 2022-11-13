@@ -106,7 +106,7 @@ class ReportesController extends Controller
             'semillero' => true,
             'convocatorias' => false,
         );
-        return $this->retornoRespuestaReporte($busqueda, 'PROYECTOS DE AULA', $request->rol, 'reporte_proyectos_semillero_' . date('Y_m_d_h_i_s'), $datosMostrar);
+        return $this->retornoRespuestaReporte($busqueda, 'PROYECTOS DE AULA', $request->rol, 'reporte_proyectos_de_aula_' . date('Y_m_d_h_i_s'), $datosMostrar);
     }
 
     public function proyectosDeAula(Request $request)
@@ -129,7 +129,7 @@ class ReportesController extends Controller
             'semillero' => false,
             'convocatorias' => false,
         );
-        return $this->retornoRespuestaReporte($busqueda, 'PROYECTOS DE AULA', $request->rol, 'reporte_proyectos_de_aula_' . date('Y_m_d_h_i_s'), $datosMostrar);
+        return $this->retornoRespuestaReporte($busqueda, 'PROYECTOS DE AULA', $request->rol, 'reporte_proyectos_semillero_' . date('Y_m_d_h_i_s'), $datosMostrar);
     }
 
     public function proyectosInvestigadoresIndependientes(Request $request)
