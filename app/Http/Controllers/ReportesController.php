@@ -228,10 +228,11 @@ class ReportesController extends Controller
     {
         if ($busqueda) {
 
-            $this->generarReportes($nombreReporte, $rolGeneraReporte, $busqueda->get(), $nombreArchivoPdf . date('Y_m_d_h_i_s'), $arrDatosMostrar);
+            $ruta = $this->generarReportes($nombreReporte, $rolGeneraReporte, $busqueda->get(), $nombreArchivoPdf . date('Y_m_d_h_i_s'), $arrDatosMostrar);
             return response()->json([
                 'success' => true,
-                'mensaje' => 'Reporte generado con exito'
+                'mensaje' => 'Reporte generado con exito',
+                'ruta' => $ruta
             ]);
         } else {
             return response()->json([
@@ -258,5 +259,6 @@ class ReportesController extends Controller
         $pdf = Pdf::loadView('reportes.views.pdf-view', compact('dataHeader', 'data', 'datosMostrar'));
         $content = $pdf->download()->getOriginalContent();
         Storage::put('public/pdfs/' . $nombreArchivoPdf . '.pdf', $content);
+        return 'public/pdfs/' . $nombreArchivoPdf . '.pdf';
     }
 }
