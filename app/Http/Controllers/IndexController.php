@@ -54,4 +54,14 @@ class IndexController extends Controller
             )
         ]);
     }
+
+    public function getProgramas()
+    {
+        return response()->json(Programa::select('id', 'nombre')->get());
+    }
+
+    public function getFacultades()
+    {
+        return response()->json(Facultad::select('id', 'nombre')->get());
+    }
 }
