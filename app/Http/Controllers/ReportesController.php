@@ -232,13 +232,15 @@ class ReportesController extends Controller
             return response()->json([
                 'success' => true,
                 'mensaje' => 'Reporte generado con exito',
-                'ruta' => $ruta
+                'ruta' => $ruta,
+                'data' => $busqueda->get()
             ]);
         } else {
             return response()->json([
                 'success' => false,
                 'proyectos' => [],
-                'mensaje' => 'No hay resultados para esta búsqueda'
+                'mensaje' => 'No hay resultados para esta búsqueda',
+                'data' => []
             ]);
         }
     }
@@ -259,6 +261,6 @@ class ReportesController extends Controller
         $pdf = Pdf::loadView('reportes.views.pdf-view', compact('dataHeader', 'data', 'datosMostrar'));
         $content = $pdf->download()->getOriginalContent();
         Storage::put('public/pdfs/' . $nombreArchivoPdf . '.pdf', $content);
-        return 'public/pdfs/' . $nombreArchivoPdf . '.pdf';
+        return 'pdfs/' . $nombreArchivoPdf . '.pdf';
     }
 }
