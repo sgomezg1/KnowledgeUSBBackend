@@ -2,10 +2,8 @@
 
 use App\Http\Controllers\BuscadorProyectosController;
 use App\Http\Controllers\IndexController;
-use App\Http\Controllers\InvestigadoresController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
