@@ -34,22 +34,22 @@ class IndexController extends Controller
         return response()->json([
             array(
                 "titulo" => "Estados",
-                "key" => "estados",
+                "key" => "estado",
                 "contenido" => $estados
             ),
             array(
                 "titulo" => "Facultades",
-                "key" => "facultades",
+                "key" => "facultad",
                 "contenido" => $facultades
             ),
             array(
                 "titulo" => "Programas",
-                "key" => "programas",
+                "key" => "programa",
                 "contenido" => $programas
             ),
             array(
                 "titulo" => "Areas de conocimiento",
-                "key" => "areasConocimiento",
+                "key" => "areaConocimiento",
                 "contenido" => $areasConocimiento
             )
         ]);

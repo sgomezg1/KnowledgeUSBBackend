@@ -11,7 +11,8 @@ class BuscadorProyectosController extends Controller
     {
         $buscador = Proyecto::select([
             'proyecto.*'
-        ])->with([
+        ])->whereHas('participantes')
+        ->with([
             'participantes',
             'areaConocimientos',
             'clases.materium.programa.facultad'
