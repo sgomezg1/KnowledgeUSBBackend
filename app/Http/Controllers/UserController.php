@@ -32,6 +32,7 @@ class UserController extends Controller
     private function retornoCredencialesIncorrectas()
     {
         return response()->json([
+            'success' => false,
             'error_code' => 'INVALID_CREDENTIALS',
             'mensaje'   => 'Error, usuario o contraseña incorrectas.'
         ], 401);
@@ -42,6 +43,7 @@ class UserController extends Controller
         $user = $this->intentoLogin($request);
         if ($user['success'])
             return response()->json([
+                'success' => true,
                 'roles' => $user['data']->tipoUsuarios
             ], 200);
         else return $this->retornoCredencialesIncorrectas();
@@ -58,6 +60,7 @@ class UserController extends Controller
             }
             if (!$hayRol) {
                 return response()->json([
+                    'success' => false,
                     'error_code' => 'NO_EXISTING_ROLE',
                     'mensaje'   => 'El usuario no tiene asignado el rol que seleccionó'
                 ], 400);
@@ -74,7 +77,8 @@ class UserController extends Controller
                     'access_token' => $tokenResult->accessToken,
                     'token_type' => 'Bearer',
                     'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString(),
-                    'politicas' => $request->user()->acepta_politicas
+                    'politicas' => $request->user()->acepta_politicas,
+                    'success' => true
                 ], 200);
             }
         } else return $this->retornoCredencialesIncorrectas();
@@ -89,12 +93,14 @@ class UserController extends Controller
                     $user->acepta_politicas = true;
                     $user->save();
                     return response()->json([
+                        'success' => true,
                         'mensaje' => 'Politica de tratamiento de datos aceptada'
                     ]);
                 }
             }
         } catch (ModelNotFoundException $e) {
             return response()->json([
+                'success' => false,
                 'error_code' => 'NO_EXISTING_USER',
                 'mensaje'   => 'El usuario que acepta la política de tratamiento de datos no existe en nuestro sistema.'
             ], 400);
@@ -135,6 +141,7 @@ class UserController extends Controller
         $request->user()->token()->revoke();
 
         return response()->json([
+            'success' => true,
             'mensaje' => 'Sesión terminada con exito'
         ], 200);
     }

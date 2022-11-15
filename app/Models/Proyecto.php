@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Proyecto
- * 
+ *
  * @property int $id
  * @property string $titulo
  * @property string $estado
@@ -29,7 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $conclusiones
  * @property string $justificacion
  * @property string $tipo_proyecto
- * 
+ *
  * @property Collection|Antecedente[] $antecedentes
  * @property Collection|AreasConocimiento[] $areas_conocimientos
  * @property Collection|Participacione[] $participaciones
@@ -77,6 +77,10 @@ class Proyecto extends Model
 		'justificacion',
 		'tipo_proyecto'
 	];
+
+    public function facultad() {
+        return $this->load('clases.materium.programa.facultad');
+    }
 
 	public function macro_proyecto()
 	{

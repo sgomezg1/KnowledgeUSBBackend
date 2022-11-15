@@ -24,11 +24,11 @@ class CrearProyectoCommand extends Command
     protected $signature = 'crear:proyecto
 
         { --semillero= : ID de semillero a asignar, no obligatorio }
-        
-        { --tipoProyecto=1 : Asignar o no un tipo de proyecto. }
+
+        { --tipoProyecto=1 : Asignar o no un tipo de proyecto }
 
         { --areasConocimiento= : Cantidad de areas de conocimiento a asignar }
-        
+
         { --productos= : Cantidad productos a asignar }
 
         { --antecedentes= : ID de proyecto a asignar como antecedente }
@@ -40,7 +40,7 @@ class CrearProyectoCommand extends Command
         { --clases= : Cantidad de clases a asignar }
 
         { --participantes= : Cantidad de participantes a asignar }
-        
+
         { --convocatorias= : Cantidad de convocatorias a asignar }
         ';
 
@@ -75,7 +75,7 @@ class CrearProyectoCommand extends Command
                 'semillero' => $this->option('semillero')
             ]);
         }
-        
+
         if ($this->option('tipoProyecto')) {
             array_push($arrPropiedades, [
                 'tipo_proyecto' => TipoProyecto::inRandomOrder()->first()->nombre
@@ -84,7 +84,7 @@ class CrearProyectoCommand extends Command
 
         $pro = Proyecto::factory(1)->create();
         $proyectoCreado = $pro[0];
-        
+
         if ($this->option('areasConocimiento')) {
             $areas = AreaConocimiento::inRandomOrder()->limit($this->option('areasConocimiento'))->get();
             foreach ($areas as $a) {
@@ -138,7 +138,7 @@ class CrearProyectoCommand extends Command
                 ]);
             }
         }
-        
+
         if ($this->option('convocatorias')) {
             $convocatorias = Convocatorium::inRandomOrder()->limit($this->option('convocatorias'))->get();
             foreach ($convocatorias as $c) {
@@ -147,7 +147,7 @@ class CrearProyectoCommand extends Command
                 ]);
             }
         }
-        
+
         $this->info("Proyecto creado correctamente");
         return 0;
     }

@@ -12,11 +12,11 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Materium
- * 
+ *
  * @property string $catalogo
  * @property string $nombre
  * @property int $programa
- * 
+ *
  * @property Collection|Clase[] $clases
  *
  * @package App\Models
@@ -29,6 +29,7 @@ class Materium extends Model
 	protected $primaryKey = 'catalogo';
 	public $incrementing = false;
 	public $timestamps = false;
+    protected $hidden = ['pivot'];
 
 	protected $casts = [
 		'programa' => 'int'

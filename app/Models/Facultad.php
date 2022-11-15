@@ -12,12 +12,12 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Facultad
- * 
+ *
  * @property int $id
  * @property string $nombre
  * @property string|null $decano
  * @property string|null $coor_inv
- * 
+ *
  * @property Usuario|null $usuario
  * @property Collection|Programa[] $programas
  *
@@ -29,6 +29,7 @@ class Facultad extends Model
 
 	protected $table = 'facultad';
 	public $timestamps = false;
+    protected $hidden = ['pivot'];
 
 	protected $casts = [
 		'id' => 'int'

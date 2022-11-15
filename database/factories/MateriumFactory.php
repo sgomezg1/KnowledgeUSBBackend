@@ -15,7 +15,7 @@ class MateriumFactory extends Factory
     public function definition()
     {
         return [
-            'catalogo' => $this->faker->word(),
+            'catalogo' => $this->faker->word(6),
             'nombre' => $this->faker->name,
             'programa' => Programa::inRandomOrder()->first()->id
         ];

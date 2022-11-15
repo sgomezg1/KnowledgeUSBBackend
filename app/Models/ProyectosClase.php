@@ -11,10 +11,10 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class ProyectosClase
- * 
+ *
  * @property int $proyecto
  * @property int $clase
- * 
+ *
  *
  * @package App\Models
  */
@@ -25,6 +25,7 @@ class ProyectosClase extends Model
 	protected $table = 'proyectos_clase';
 	public $incrementing = false;
 	public $timestamps = false;
+    protected $hidden = ['pivot'];
 
 	protected $casts = [
 		'proyecto' => 'int',

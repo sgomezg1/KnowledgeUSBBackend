@@ -10,15 +10,58 @@ use Illuminate\Http\Request;
 class IndexController extends Controller
 {
     public function consultarFiltros() {
-        $estados = array('En Propuesta', 'En Desarrollo', 'En Correcciones', 'Finalizado');
-        $facultades = Facultad::select(['id', 'nombre'])->get();
-        $programas = Programa::select(['id', 'nombre'])->get();
-        $areasConocimiento = AreaConocimiento::select(['id', 'nombre'])->get();
+        $estados = array(
+            array(
+                'id' => 'En Propuesta',
+                'nombre' => 'En Propuesta'
+            ),
+            array(
+                'id' => 'En Propuesta',
+                'nombre' => 'En Desarrollo'
+            ),
+            array(
+                'id' => 'En Propuesta',
+                'nombre' => 'En Correcciones'
+            ),
+            array(
+                'id' => 'En Propuesta',
+                'nombre' => 'Finalizado'
+            )
+        );
+        $facultades = Facultad::select(['id', 'nombre'])->get()->toArray();
+        $programas = Programa::select(['id', 'nombre'])->get()->toArray();
+        $areasConocimiento = AreaConocimiento::select(['id', 'nombre'])->get()->toArray();
         return response()->json([
-            'estados' => $estados,
-            'facultades' => $facultades,
-            'programas' => $programas,
-            'areasConocimiento' => $areasConocimiento
-        ]); 
+            array(
+                "titulo" => "Estados",
+                "key" => "estado",
+                "contenido" => $estados
+            ),
+            array(
+                "titulo" => "Facultades",
+                "key" => "facultad",
+                "contenido" => $facultades
+            ),
+            array(
+                "titulo" => "Programas",
+                "key" => "programa",
+                "contenido" => $programas
+            ),
+            array(
+                "titulo" => "Areas de conocimiento",
+                "key" => "areaConocimiento",
+                "contenido" => $areasConocimiento
+            )
+        ]);
+    }
+
+    public function getProgramas()
+    {
+        return response()->json(Programa::select('id', 'nombre')->get());
+    }
+
+    public function getFacultades()
+    {
+        return response()->json(Facultad::select('id', 'nombre')->get());
     }
 }
