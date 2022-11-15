@@ -12,13 +12,13 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Clase
- * 
+ *
  * @property int $numero
  * @property string $nombre
  * @property string $semestre
  * @property string $materia
  * @property string|null $profesor
- * 
+ *
  * @property Materium $materium
  * @property Usuario|null $usuario
  * @property Collection|Proyecto[] $proyectos
@@ -33,6 +33,7 @@ class Clase extends Model
 	protected $primaryKey = 'numero';
 	public $incrementing = false;
 	public $timestamps = false;
+    protected $hidden = ['pivot'];
 
 	protected $casts = [
 		'numero' => 'int'

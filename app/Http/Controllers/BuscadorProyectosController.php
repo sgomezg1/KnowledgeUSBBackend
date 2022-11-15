@@ -10,20 +10,14 @@ class BuscadorProyectosController extends Controller
     public function showProyectos(Request $request)
     {
         $buscador = Proyecto::select([
-            'proyecto.*',
-            'facultad.nombre as nombre_facultad',
-            'programa.nombre as nombre_programa'
+            'proyecto.*'
         ])->with([
             'participantes',
-            'areaConocimientos'
-        ])->join('proyectos_clase', 'proyectos_clase.proyecto', 'proyecto.id')
-            ->join('clase', 'clase.numero', 'proyectos_clase.clase')
-            ->join('materia', 'materia.catalogo', 'clase.materia')
-            ->join('programa', 'programa.id', 'materia.programa')
-            ->join('facultad', 'facultad.id', 'programa.facultad_id');
-
+            'areaConocimientos',
+            'clases.materium.programa.facultad'
+        ])->groupBy('proyecto.id');
         $buscador = FilterQueriesController::retornarFiltros($buscador, $request);
-
+        $buscador->groupBy('proyecto.id');
         if ($buscador) {
             return response()->json([
                 'success' => true,

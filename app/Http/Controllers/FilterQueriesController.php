@@ -14,11 +14,16 @@ class FilterQueriesController extends Controller
         }
 
         if ($request->facultad) {
-            $busqueda->whereIn('facultad.id', $request->facultad);
+            $busqueda->whereHas('clases.materium.programa.facultad', function(Builder $q) use ($request) {
+                $q->whereIn('facultad.id', $request->facultad);
+            });
+            // $busqueda->whereIn('facultad.id', $request->facultad);
         }
 
         if ($request->programa) {
-            $busqueda->whereIn('programa.id', $request->programa);
+            $busqueda->whereHas('clases.materium.programa', function(Builder $q) use ($request) {
+                $q->whereIn('programa.id', $request->programa);
+            });
         }
 
         if ($request->areaConocimiento) {
