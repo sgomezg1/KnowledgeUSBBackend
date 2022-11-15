@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BuscadorProyectosController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\UserController;
@@ -61,4 +62,11 @@ Route::group([
     Route::post('/trabajo-de-grado', [ReportesController::class, 'proyectosTrabajoDeGrado']);
     Route::post('/facultad/{id}', [ReportesController::class, 'proyectosPorFacultad']);
     Route::post('/programa/{id}', [ReportesController::class, 'proyectosPorPrograma']);
+});
+
+Route::group([
+    'prefix' => 'graficos',
+    'middleware' => 'auth:api'
+], function() {
+    Route::get('/valores-tarjetas', [DashboardController::class, 'valoresTarjetasDashboard']);
 });

@@ -93,6 +93,7 @@ class UserController extends Controller
                     $user->acepta_politicas = true;
                     $user->save();
                     return response()->json([
+                        'success' => true,
                         'mensaje' => 'Politica de tratamiento de datos aceptada'
                     ]);
                 }

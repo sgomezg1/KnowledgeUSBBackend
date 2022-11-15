@@ -12,12 +12,12 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Programa
- * 
+ *
  * @property int $id
  * @property string $nombre
  * @property int $facultad_id
  * @property string|null $director
- * 
+ *
  * @property Facultad $facultad
  * @property Usuario|null $usuario
  * @property Collection|Materium[] $materia
@@ -34,6 +34,7 @@ class Programa extends Model
 	protected $table = 'programa';
 	public $incrementing = false;
 	public $timestamps = false;
+    protected $hidden = ['pivot'];
 
 	protected $casts = [
 		'id' => 'int',
@@ -48,7 +49,7 @@ class Programa extends Model
 
 	public function facultad()
 	{
-		return $this->belongsTo(Facultad::class);
+		return $this->belongsTo(Facultad::class, 'facultad_id');
 	}
 
 	public function usuario()

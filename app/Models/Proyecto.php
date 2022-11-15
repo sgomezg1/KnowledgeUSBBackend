@@ -78,6 +78,10 @@ class Proyecto extends Model
 		'tipo_proyecto'
 	];
 
+    public function facultad() {
+        return $this->load('clases.materium.programa.facultad');
+    }
+
 	public function macro_proyecto()
 	{
 		return $this->belongsTo(MacroProyecto::class, 'macro_proyecto');
