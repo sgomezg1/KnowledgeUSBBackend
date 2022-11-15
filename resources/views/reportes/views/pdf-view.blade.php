@@ -32,10 +32,10 @@
                             <span class="texto-resultado">{{ $d->estado }}</span>
                         </td>
                         <td width="16%">
-                            <span class="texto-resultado">{{ $d->nombre_facultad }}</span>
+                            <span class="texto-resultado">{{ $d->first()->clases()->first()->materium()->first()->programa()->first()->facultad()->first()->nombre }}</span>
                         </td>
                         <td width="16%">
-                            <span class="texto-resultado">{{ $d->nombre_programa }}</span>
+                            <span class="texto-resultado">{{ $data->first()->clases()->first()->materium()->first()->programa()->first()->nombre }}</span>
                         </td>
                         @if ($d->estado === 'Finalizado')
                             <td width="16%">
@@ -69,7 +69,7 @@
                         @endif
                         @if ($datosMostrar['semillero'] == true)
                             <td width="16%">
-                                <span class="texto-resultado">{{ $d->nombre_semillero }}</span>
+                                <span class="texto-resultado">{{ $d->semillero()->first()->nombre }}</span>
                             </td>
                         @endif
                     </tr>
