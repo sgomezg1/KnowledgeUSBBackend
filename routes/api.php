@@ -68,5 +68,5 @@ Route::group([
     'prefix' => 'graficos',
     'middleware' => 'auth:api'
 ], function() {
-    Route::get('/valores-tarjetas', [DashboardController::class, 'valoresTarjetasDashboard']);
+    Route::get('/elementos-dashboard', [DashboardController::class, 'elementosDashboard']);
 });
