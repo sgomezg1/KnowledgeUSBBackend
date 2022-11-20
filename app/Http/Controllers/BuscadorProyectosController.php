@@ -12,12 +12,12 @@ class BuscadorProyectosController extends Controller
         $buscador = Proyecto::select([
             'proyecto.*'
         ])->whereHas('participantes')
-        ->with([
-            'participantes',
-            'areaConocimientos',
-            'clases.materium.programa.facultad'
-        ])->groupBy('proyecto.id');
-        $buscador = FilterQueriesController::retornarFiltros($buscador, $request);
+            ->with([
+                'participantes',
+                'areaConocimientos',
+                'clases.materium.programa.facultad'
+            ])->groupBy('proyecto.id');
+        $buscador = FilterQueriesController::retornarFiltros($buscador, $request, 'proyecto');
         $buscador->groupBy('proyecto.id');
         if ($buscador) {
             return response()->json([
