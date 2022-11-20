@@ -3,6 +3,7 @@
 use App\Http\Controllers\BuscadorProyectosController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\InvestigadoresController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +27,7 @@ Route::group([
 
     Route::group([
         'middleware' => 'auth:api'
-    ], function() {
+    ], function () {
         Route::post('aceptar-politicas', [UserController::class, 'aceptarPoliticas']);
         Route::get('logout', [UserController::class, 'logout']);
         Route::get('user', [UserController::class, 'user']);
@@ -36,7 +37,7 @@ Route::group([
 Route::group([
     'prefix' => '',
     'middlewade' => 'auth:api'
-], function() {
+], function () {
     Route::get('/filtros', [IndexController::class, 'consultarFiltros']);
     Route::get('/programas', [IndexController::class, 'getProgramas']);
     Route::get('/facultades', [IndexController::class, 'getFacultades']);
@@ -44,7 +45,7 @@ Route::group([
 
 Route::group([
     'prefix' => 'proyectos'
-], function() {
+], function () {
     Route::post('/', [BuscadorProyectosController::class, 'showProyectos']);
     Route::get('/{id}', [BuscadorProyectosController::class, 'proyecto']);
 });
@@ -52,7 +53,7 @@ Route::group([
 Route::group([
     'prefix' => 'reportes',
     'middleware' => 'auth:api'
-], function() {
+], function () {
     Route::post('/presupuestos', [ReportesController::class, 'proyectosConPresupuesto']);
     Route::post('/convocatorias', [ReportesController::class, 'proyectosPorConvocatoria']);
     Route::post('/integrantes', [ReportesController::class, 'proyectosRequierenIntegrantes']);
@@ -67,6 +68,14 @@ Route::group([
 Route::group([
     'prefix' => 'graficos',
     'middleware' => 'auth:api'
-], function() {
+], function () {
     Route::get('/elementos-dashboard', [DashboardController::class, 'elementosDashboard']);
+});
+
+Route::group([
+    'prefix' => 'investigadores',
+    'middleware' => 'auth:api'
+], function () {
+    Route::get('/', [InvestigadoresController::class, 'getinvestigadores']);
+    Route::get('/{id}', [InvestigadoresController::class, 'getInvestigador']);
 });
