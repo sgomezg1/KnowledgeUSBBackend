@@ -13,7 +13,8 @@ class InvestigadoresController extends Controller
         $usuarios = Usuario::select(['usuario.cedula', 'usuario.nombres', 'usuario.apellidos'])
             ->with('participaciones.clases.materium.programa.facultad');
         $usuarios = FilterQueriesController::retornarFiltros($usuarios, $request, 'investigador');
-        $usuarios->groupBy('usuario.cedula');
+        //$usuarios->groupBy('usuario.cedula');
+        //dd($usuarios->get());
         return response()->json($usuarios->get());
     }
 

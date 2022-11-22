@@ -76,6 +76,6 @@ Route::group([
     'prefix' => 'investigadores',
     'middleware' => 'auth:api'
 ], function () {
-    Route::get('/', [InvestigadoresController::class, 'getinvestigadores']);
+    Route::post('/', [InvestigadoresController::class, 'getinvestigadores']);
     Route::get('/{id}', [InvestigadoresController::class, 'getInvestigador']);
 });
