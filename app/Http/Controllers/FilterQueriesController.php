@@ -13,25 +13,38 @@ class FilterQueriesController extends Controller
             if ($request->estado) {
                 $busqueda->whereIn('estado', $request->estado);
             }
-        }
 
-        if ($request->facultad) {
-            $busqueda->whereHas('clases.materium.programa.facultad', function (Builder $q) use ($request) {
-                $q->whereIn('facultad.id', $request->facultad);
-            });
-        }
+            if ($request->facultad) {
+                $busqueda->whereHas('clases.materium.programa.facultad', function (Builder $q) use ($request) {
+                    $q->whereIn('facultad.id', $request->facultad);
+                });
+            }
 
-        if ($request->programa) {
-            $busqueda->whereHas('clases.materium.programa', function (Builder $q) use ($request) {
-                $q->whereIn('programa.id', $request->programa);
-            });
-        }
+            if ($request->programa) {
+                $busqueda->whereHas('clases.materium.programa', function (Builder $q) use ($request) {
+                    $q->whereIn('programa.id', $request->programa);
+                });
+            }
 
-        if ($tipo === 'proyecto') {
             if ($request->areaConocimiento) {
                 $busqueda->whereHas('areaConocimientos', function (Builder $q) use ($request) {
                     $q->whereIn('areas_conocimiento.area_conocimiento', $request->areaConocimiento);
                 })->get();
+            }
+        }
+
+
+        if ($tipo === 'investigador') {
+            if ($request->facultad) {
+                $busqueda->whereHas('participaciones.clases.materium.programa.facultad', function (Builder $q) use ($request) {
+                    $q->whereIn('facultad.id', $request->facultad);
+                });
+            }
+
+            if ($request->programa) {
+                $busqueda->whereHas('participaciones.clases.materium.programa', function (Builder $q) use ($request) {
+                    $q->whereIn('programa.id', $request->programa);
+                });
             }
         }
 
