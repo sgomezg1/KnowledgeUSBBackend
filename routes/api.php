@@ -70,6 +70,7 @@ Route::group([
     'middleware' => 'auth:api'
 ], function () {
     Route::get('/elementos-dashboard', [DashboardController::class, 'elementosDashboard']);
+    Route::post('/datos-graficas-finalizados-facultad', [DashboardController::class, 'datosGraficoProyectosFinalizadosPorFacultad']);
 });
 
 Route::group([
