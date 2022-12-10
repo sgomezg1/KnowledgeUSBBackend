@@ -84,10 +84,8 @@ class ReportesController extends Controller
             'proyecto.titulo',
             'proyecto.estado',
             'proyecto.descripcion',
-            'proyecto.titulo',
-            'proyecto.titulo',
             'proyecto.semillero'
-        ])->with('clases.materium.programa.facultad', 'semillero')
+        ])->with(['clases.materium.programa.facultad', 'semillero'])
             ->groupBy('proyecto.id');
 
         $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request, 'proyectos');
