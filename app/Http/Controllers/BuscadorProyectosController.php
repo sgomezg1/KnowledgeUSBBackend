@@ -44,9 +44,7 @@ class BuscadorProyectosController extends Controller
             ->join('materia', 'materia.catalogo', 'clase.materia')
             ->join('programa', 'programa.id', 'materia.programa')
             ->join('facultad', 'facultad.id', 'programa.facultad_id')
-            ->toSql();
-        dd($consulta);
-        /* ->with([
+            ->with([
                 'macro_proyecto',
                 'semillero',
                 'tipo_proyecto',
@@ -55,7 +53,7 @@ class BuscadorProyectosController extends Controller
                 'participantes',
                 'productos',
                 'presupuestos'
-            ])->where('proyecto.id', $id)->first(); */
+            ])->where('proyecto.id', $id)->first();
         if ($consulta) {
             return response()->json([
                 'success' => true,
