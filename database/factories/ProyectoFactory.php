@@ -16,6 +16,8 @@ class ProyectoFactory extends Factory
      */
     public function definition()
     {
+        $tiposConocimiento = array('Tacito', 'Implicito');
+        $randomNum = rand(0, 1);
         return [
             'titulo' => $this->faker->title,
             'estado' => 'En Desarrollo',
@@ -30,7 +32,8 @@ class ProyectoFactory extends Factory
             'metodologia' => $this->faker->sentence(10),
             'conclusiones' => $this->faker->sentence(10),
             'justificacion' => $this->faker->sentence(10),
-            'tipo_proyecto' => TipoProyecto::inRandomOrder()->first()->nombre
+            'tipo_proyecto' => TipoProyecto::inRandomOrder()->first()->nombre,
+            'tipo_conocimiento' => $tiposConocimiento[$randomNum]
         ];
     }
 }
