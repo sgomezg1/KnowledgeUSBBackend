@@ -71,6 +71,7 @@ Route::group([
 ], function () {
     Route::get('/elementos-dashboard', [DashboardController::class, 'elementosDashboard']);
     Route::post('/datos-graficas-finalizados-facultad', [DashboardController::class, 'datosGraficoProyectosFinalizadosPorFacultad']);
+    Route::post('/datos-graficas-grado-semillero-facultad', [DashboardController::class, 'datosProyectoGradoSemilleroPorFacultad']);
 });
 
 Route::group([

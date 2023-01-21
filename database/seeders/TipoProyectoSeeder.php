@@ -14,6 +14,29 @@ class TipoProyectoSeeder extends Seeder
      */
     public function run()
     {
-        TipoProyecto::factory(10)->create();
+        TipoProyecto::create([
+            'nombre' => 'Proyecto de Aula',
+            'descripcion' => ''
+        ]);
+
+        TipoProyecto::create([
+            'nombre' => 'Trabajo de Grado',
+            'descripcion' => ''
+        ]);
+
+        TipoProyecto::create([
+            'nombre' => 'Inv. Independientes',
+            'descripcion' => ''
+        ]);
+
+        TipoProyecto::create([
+            'nombre' => 'Convocatoria',
+            'descripcion' => ''
+        ]);
+
+        TipoProyecto::create([
+            'nombre' => 'Semillero',
+            'descripcion' => ''
+        ]);
     }
 }

@@ -109,6 +109,39 @@ class DashboardController extends Controller
     {
     }
 
+    public function datosProyectoGradoSemilleroPorFacultad()
+    {
+        $arregloDatosGrafico = array();
+        $facultades = Facultad::all();
+        foreach ($facultades as $f) {
+            $proyectosGrado = DB::table('facultad')
+                ->select(['facultad.id', 'facultad.nombre', DB::raw('count(*) as proyectos_grado')])
+                ->join('programa', 'facultad.id', 'programa.facultad_id')
+                ->join('materia', 'programa.id', 'materia.programa')
+                ->join('clase', 'materia.catalogo', 'clase.materia')
+                ->join('proyectos_clase', 'clase.numero', 'proyectos_clase.clase')
+                ->join('proyecto', 'proyectos_clase.proyecto', 'proyecto.id')
+                ->where('proyecto.tipo_proyecto', 'Trabajo de Grado')
+                ->where('facultad.id', $f->id)
+                ->groupBy('facultad.id')
+                ->get();
+
+            $semilleros = DB::table('facultad')
+                ->select(['facultad.id', 'facultad.nombre', DB::raw('count(*) as proyectos_grado')])
+                ->join('programa', 'facultad.id', 'programa.facultad_id')
+                ->join('materia', 'programa.id', 'materia.programa')
+                ->join('clase', 'materia.catalogo', 'clase.materia')
+                ->join('proyectos_clase', 'clase.numero', 'proyectos_clase.clase')
+                ->join('proyecto', 'proyectos_clase.proyecto', 'proyecto.id')
+                ->where('proyecto.tipo_proyecto', 'Semillero')
+                ->where('facultad.id', $f->id)
+                ->groupBy('facultad.id')
+                ->get();
+
+            dd($proyectosGrado);
+        }
+    }
+
     public function datosGraficoProyectosFinalizadosPorFacultad(Request $request)
     {
         $arregloDatosGrafico = array();
