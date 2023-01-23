@@ -107,6 +107,27 @@ class DashboardController extends Controller
 
     public function datosGraficaPresupuesto()
     {
+        $arregloRetorno = array();
+        $proyectosConPresupuesto = DB::table('presupuesto')
+            ->select([
+                DB::raw('sum(presupuesto.monto) as presupuesto'),
+                DB::raw('YEAR(presupuesto.fecha) as anio, MONTH(presupuesto.fecha) as mes')
+            ])
+            ->join('proyecto', 'proyecto.id', 'presupuesto.proyecto')
+            ->groupBy('anio', 'mes')
+            ->get();
+        foreach ($proyectosConPresupuesto as $p) {
+            $fechaGrupoDos = ucfirst(Carbon::create()->year($p->anio)->month($p->mes)->locale('es')->monthName) . ' ' . $p->anio;
+            $arregloPush = array(
+                'presupuesto' => $p->presupuesto,
+                'fecha' => $fechaGrupoDos
+            );
+            array_push($arregloRetorno, $arregloPush);
+        }
+        return response()->json([
+            "success" => true,
+            "datos" => $arregloRetorno
+        ]);
     }
 
     public function datosProyectoGradoSemilleroPorFacultad()
