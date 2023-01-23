@@ -127,7 +127,7 @@ class DashboardController extends Controller
                 ->get();
 
             $semilleros = DB::table('facultad')
-                ->select(['facultad.id', 'facultad.nombre', DB::raw('count(*) as proyectos_grado')])
+                ->select(['facultad.id', 'facultad.nombre', DB::raw('count(*) as semilleros')])
                 ->join('programa', 'facultad.id', 'programa.facultad_id')
                 ->join('materia', 'programa.id', 'materia.programa')
                 ->join('clase', 'materia.catalogo', 'clase.materia')
@@ -138,8 +138,17 @@ class DashboardController extends Controller
                 ->groupBy('facultad.id')
                 ->get();
 
-            dd($proyectosGrado);
+            $arrayInsertar = array(
+                "facultad" => $f->nombre,
+                "proyectos_grado" => ($proyectosGrado->count() > 0) ? $proyectosGrado[0]->proyectos_grado : 0,
+                "semilleros" => ($semilleros->count() > 0) ? $semilleros[0]->semilleros : 0
+            );
+            array_push($arregloDatosGrafico, $arrayInsertar);
         }
+        return response()->json([
+            "success" => true,
+            "datos" => $arregloDatosGrafico
+        ]);
     }
 
     public function datosGraficoProyectosFinalizadosPorFacultad(Request $request)

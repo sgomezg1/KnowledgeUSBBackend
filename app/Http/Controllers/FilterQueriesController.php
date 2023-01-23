@@ -10,6 +10,10 @@ class FilterQueriesController extends Controller
     public static function retornarFiltros($busqueda, Request $request, $tipo)
     {
         if ($tipo === 'proyecto') {
+            if ($request->nombre) {
+                $busqueda->whereLike('titulo', $request->nombre);
+            }
+
             if ($request->estado) {
                 $busqueda->whereIn('estado', $request->estado);
             }
@@ -35,6 +39,10 @@ class FilterQueriesController extends Controller
 
 
         if ($tipo === 'investigador') {
+            if ($request->nombre) {
+                $busqueda->whereLike('nombres', $request->nombre);
+            }
+
             if ($request->facultad) {
                 $busqueda->whereHas('participaciones.clases.materium.programa.facultad', function (Builder $q) use ($request) {
                     $q->whereIn('facultad.id', $request->facultad);
@@ -47,6 +55,8 @@ class FilterQueriesController extends Controller
                 });
             }
         }
+
+
 
         return $busqueda;
     }

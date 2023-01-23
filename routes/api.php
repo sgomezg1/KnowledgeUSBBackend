@@ -51,6 +51,13 @@ Route::group([
 });
 
 Route::group([
+    'prefix' => 'investigadores',
+], function () {
+    Route::post('/', [InvestigadoresController::class, 'getinvestigadores']);
+    Route::get('/{id}', [InvestigadoresController::class, 'getInvestigador']);
+});
+
+Route::group([
     'prefix' => 'reportes',
     'middleware' => 'auth:api'
 ], function () {
@@ -72,12 +79,4 @@ Route::group([
     Route::get('/elementos-dashboard', [DashboardController::class, 'elementosDashboard']);
     Route::post('/datos-graficas-finalizados-facultad', [DashboardController::class, 'datosGraficoProyectosFinalizadosPorFacultad']);
     Route::post('/datos-graficas-grado-semillero-facultad', [DashboardController::class, 'datosProyectoGradoSemilleroPorFacultad']);
-});
-
-Route::group([
-    'prefix' => 'investigadores',
-    'middleware' => 'auth:api'
-], function () {
-    Route::post('/', [InvestigadoresController::class, 'getinvestigadores']);
-    Route::get('/{id}', [InvestigadoresController::class, 'getInvestigador']);
 });
