@@ -15,7 +15,7 @@ class BuscadorProyectosController extends Controller
             ->with([
                 'participantes',
                 'areaConocimientos',
-                'clases.materium.programa.facultad'
+                'clases.materium.programas.facultad'
             ])->groupBy('proyecto.id');
         $buscador = FilterQueriesController::retornarFiltros($buscador, $request, 'proyecto');
         $buscador->groupBy('proyecto.id');

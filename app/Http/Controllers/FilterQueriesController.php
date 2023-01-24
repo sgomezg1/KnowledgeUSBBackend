@@ -19,14 +19,14 @@ class FilterQueriesController extends Controller
             }
 
             if ($request->facultad) {
-                $busqueda->whereHas('clases.materium.programa.facultad', function (Builder $q) use ($request) {
-                    $q->whereIn('facultad.id', $request->facultad);
+                $busqueda->whereHas('clases.materium.programas.facultad', function (Builder $q) use ($request) {
+                    $q->where('facultad.id', $request->facultad);
                 });
             }
 
             if ($request->programa) {
-                $busqueda->whereHas('clases.materium.programa', function (Builder $q) use ($request) {
-                    $q->whereIn('programa.id', $request->programa);
+                $busqueda->whereHas('clases.materium.programas', function (Builder $q) use ($request) {
+                    $q->where('programa.id', $request->programa);
                 });
             }
 
@@ -44,14 +44,14 @@ class FilterQueriesController extends Controller
             }
 
             if ($request->facultad) {
-                $busqueda->whereHas('participaciones.clases.materium.programa.facultad', function (Builder $q) use ($request) {
+                $busqueda->whereHas('participaciones.clases.materium.programas.facultad', function (Builder $q) use ($request) {
                     $q->whereIn('facultad.id', $request->facultad);
                 });
             }
 
             if ($request->programa) {
-                $busqueda->whereHas('participaciones.clases.materium.programa', function (Builder $q) use ($request) {
-                    $q->whereIn('programa.id', $request->programa);
+                $busqueda->whereHas('participaciones.clases.materium.programas', function (Builder $q) use ($request) {
+                    $q->whereIn('programas.id', $request->programa);
                 });
             }
         }
@@ -72,7 +72,7 @@ class FilterQueriesController extends Controller
         }
 
         if ($request->programa) {
-            $busqueda->whereIn('programa.id', $request->programa);
+            $busqueda->whereIn('programas.id', $request->programa);
         }
 
         return $busqueda;
@@ -119,7 +119,7 @@ class FilterQueriesController extends Controller
         }
 
         if ($request->programa) {
-            $busqueda->whereIn('programa.id', $request->programa);
+            $busqueda->whereIn('programas.id', $request->programa);
         }
 
         if ($request->areaConocimiento) {

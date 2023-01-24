@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Proyecto;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ReportesController extends Controller
@@ -13,17 +14,10 @@ class ReportesController extends Controller
     {
         $busqueda = Proyecto::select([
             'proyecto.*'
-        ])->with('clases.materium.programa.facultad')
-            ->whereHas(
-                'presupuestos'
-            )->join('proyectos_clase', 'proyectos_clase.proyecto', 'proyecto.id')
-            ->join('clase', 'clase.numero', 'proyectos_clase.clase')
-            ->join('materia', 'materia.catalogo', 'clase.materia')
-            ->join('programa', 'programa.id', 'materia.programa')
-            ->join('facultad', 'facultad.id', 'programa.facultad_id')
-            ->groupBy('proyecto.id');
+        ])->with('clases.materium.programas.facultad');
 
-        $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request, 'proyectos');
+        $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request, 'proyecto');
+        $busqueda = $busqueda->groupBy('proyecto.id');
         $datosMostrar = array(
             'presupuestos' => true,
             'semillero' => false,
@@ -36,16 +30,11 @@ class ReportesController extends Controller
     {
         $busqueda = Proyecto::select([
             'proyecto.*'
-        ])->with('clases.materium.programa.facultad')
-            ->whereHas('convocatorias')
-            ->join('proyectos_clase', 'proyectos_clase.proyecto', 'proyecto.id')
-            ->join('clase', 'clase.numero', 'proyectos_clase.clase')
-            ->join('materia', 'materia.catalogo', 'clase.materia')
-            ->join('programa', 'programa.id', 'materia.programa')
-            ->join('facultad', 'facultad.id', 'programa.facultad_id')
-            ->groupBy('proyecto.id');
+        ])->with('clases.materium.programas.facultad')
+            ->whereHas('convocatorias');
 
-        $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request, 'proyectos');
+        $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request, 'proyecto');
+        $busqueda = $busqueda->groupBy('proyecto.id');
         $datosMostrar = array(
             'presupuestos' => false,
             'semillero' => false,
@@ -57,17 +46,12 @@ class ReportesController extends Controller
     public function proyectosRequierenIntegrantes(Request $request)
     {
         $busqueda = Proyecto::select([
-            'proyecto.*',
-        ])->with('clases.materium.programa.facultad')
-            ->whereDoesntHave('participantes')
-            ->join('proyectos_clase', 'proyectos_clase.proyecto', 'proyecto.id')
-            ->join('clase', 'clase.numero', 'proyectos_clase.clase')
-            ->join('materia', 'materia.catalogo', 'clase.materia')
-            ->join('programa', 'programa.id', 'materia.programa')
-            ->join('facultad', 'facultad.id', 'programa.facultad_id')
-            ->groupBy('proyecto.id');
+            'proyecto.*'
+        ])->with('clases.materium.programas.facultad')
+            ->whereDoesntHave('participantes');
 
-        $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request, 'proyectos');
+        $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request, 'proyecto');
+        $busqueda = $busqueda->groupBy('proyecto.id');
         $datosMostrar = array(
             'presupuestos' => false,
             'semillero' => false,
@@ -84,11 +68,11 @@ class ReportesController extends Controller
             'proyecto.estado',
             'proyecto.descripcion',
             'proyecto.semillero'
-        ])->with(['clases.materium.programa.facultad', 'semillero'])
-            ->groupBy('proyecto.id');
+        ])->with(['clases.materium.programas.facultad', 'semillero']);
 
-        $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request, 'proyectos');
+        $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request, 'proyecto');
         $busqueda->whereNotNull('proyecto.semillero');
+        $busqueda = $busqueda->groupBy('proyecto.id');
         $datosMostrar = array(
             'presupuestos' => false,
             'semillero' => true,
@@ -101,16 +85,11 @@ class ReportesController extends Controller
     {
         $busqueda = Proyecto::select([
             'proyecto.*'
-        ])->with('clases.materium.programa.facultad')
-            ->join('proyectos_clase', 'proyectos_clase.proyecto', 'proyecto.id')
-            ->join('clase', 'clase.numero', 'proyectos_clase.clase')
-            ->join('materia', 'materia.catalogo', 'clase.materia')
-            ->join('programa', 'programa.id', 'materia.programa')
-            ->join('facultad', 'facultad.id', 'programa.facultad_id')
-            ->groupBy('proyecto.id');
+        ])->with('clases.materium.programas.facultad');
 
-        $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request, 'proyectos');
+        $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request, 'proyecto');
         $busqueda->where('proyecto.tipo_proyecto', '=', 'Proyecto de Aula');
+        $busqueda = $busqueda->groupBy('proyecto.id');
         $datosMostrar = array(
             'presupuestos' => false,
             'semillero' => false,
@@ -122,17 +101,12 @@ class ReportesController extends Controller
     public function proyectosInvestigadoresIndependientes(Request $request)
     {
         $busqueda = Proyecto::select([
-            'proyecto.*'
-        ])->with('clases.materium.programa.facultad')
-            ->join('proyectos_clase', 'proyectos_clase.proyecto', 'proyecto.id')
-            ->join('clase', 'clase.numero', 'proyectos_clase.clase')
-            ->join('materia', 'materia.catalogo', 'clase.materia')
-            ->join('programa', 'programa.id', 'materia.programa')
-            ->join('facultad', 'facultad.id', 'programa.facultad_id')
-            ->groupBy('proyecto.id');
+            'proyecto.*',
+        ])->with('clases.materium.programas.facultad');
 
-        $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request, 'proyectos');
+        $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request, 'proyecto');
         $busqueda->where('proyecto.tipo_proyecto', 'Investigadores Independientes');
+        $busqueda = $busqueda->groupBy('proyecto.id');
         $datosMostrar = array(
             'presupuestos' => false,
             'semillero' => false,
@@ -144,18 +118,12 @@ class ReportesController extends Controller
     public function proyectosTrabajoDeGrado(Request $request)
     {
         $busqueda = Proyecto::select([
-            'proyecto.*',
-            'facultad.nombre as nombre_facultad',
-            'programa.nombre as nombre_programa'
-        ])->join('proyectos_clase', 'proyectos_clase.proyecto', 'proyecto.id')
-            ->join('clase', 'clase.numero', 'proyectos_clase.clase')
-            ->join('materia', 'materia.catalogo', 'clase.materia')
-            ->join('programa', 'programa.id', 'materia.programa')
-            ->join('facultad', 'facultad.id', 'programa.facultad_id')
-            ->groupBy('proyecto.id', 'nombre_facultad', 'nombre_programa');
+            'proyecto.*'
+        ])->join('proyectos_clase', 'proyectos_clase.proyecto', 'proyecto.id');
 
-        $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request, 'proyectos');
+        $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request, 'proyecto');
         $busqueda->where('proyecto.tipo_proyecto', 'Trabajo de Grado');
+        $busqueda = $busqueda->groupBy('proyecto.id');
         $datosMostrar = array(
             'presupuestos' => false,
             'semillero' => false,
@@ -177,7 +145,7 @@ class ReportesController extends Controller
             ->join('facultad', 'facultad.id', 'programa.facultad_id')
             ->groupBy('proyecto.id', 'nombre_facultad', 'nombre_programa');
 
-        $busqueda = FilterQueriesController::retornarFiltrosSinFacultad($busqueda, $request);
+        $busqueda = FilterQueriesController::retornarFiltrosSinFacultad($busqueda, $request, 'proyecto');
         $busqueda->where('facultad.id', $id);
         $datosMostrar = array(
             'presupuestos' => false,
@@ -200,7 +168,7 @@ class ReportesController extends Controller
             ->join('facultad', 'facultad.id', 'programa.facultad_id')
             ->groupBy('proyecto.id', 'nombre_facultad', 'nombre_programa');
 
-        $busqueda = FilterQueriesController::retornarFiltrosSinPrograma($busqueda, $request);
+        $busqueda = FilterQueriesController::retornarFiltrosSinPrograma($busqueda, $request, 'proyecto');
         $busqueda->where('programa.id', $id);
         $datosMostrar = array(
             'presupuestos' => false,

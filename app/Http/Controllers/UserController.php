@@ -35,7 +35,7 @@ class UserController extends Controller
             'success' => false,
             'error_code' => 'INVALID_CREDENTIALS',
             'mensaje'   => 'Error, usuario o contraseña incorrectas.'
-        ], 401);
+        ], 200);
     }
 
     public function prevLogin(UserRequest $request)
@@ -107,7 +107,8 @@ class UserController extends Controller
         }
     }
 
-    protected function solicitarTokenJWTRefresco($correo, $password) {
+    protected function solicitarTokenJWTRefresco($correo, $password)
+    {
         $client = \Laravel\Passport\Client::where('id', 2)->first();
         $tokenJWT = Http::asForm()->post('http://localhost:8000/oauth/token', [
             'grant_type' => 'password',
@@ -119,7 +120,8 @@ class UserController extends Controller
         return $tokenJWT->json();
     }
 
-    public function refrescarTokenExpirado(Request $request) {
+    public function refrescarTokenExpirado(Request $request)
+    {
         $client = \Laravel\Passport\Client::where('id', 2)->first();
         $tokenJWT = Http::asForm()->post('http://localhost:8000/oauth/token', [
             'grant_type' => 'refresh_token',

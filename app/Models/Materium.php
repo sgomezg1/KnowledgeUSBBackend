@@ -23,30 +23,30 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Materium extends Model
 {
-	use HasFactory;
+    use HasFactory;
 
-	protected $table = 'materia';
-	protected $primaryKey = 'catalogo';
-	public $incrementing = false;
-	public $timestamps = false;
+    protected $table = 'materia';
+    protected $primaryKey = 'catalogo';
+    public $incrementing = false;
+    public $timestamps = false;
     protected $hidden = ['pivot'];
 
-	protected $casts = [
-		'programa' => 'int'
-	];
+    protected $casts = [
+        'programa' => 'int'
+    ];
 
-	protected $fillable = [
-		'nombre',
-		'programa'
-	];
+    protected $fillable = [
+        'nombre',
+        'programa'
+    ];
 
-	public function programa()
-	{
-		return $this->belongsTo(Programa::class, 'programa');
-	}
+    public function programas()
+    {
+        return $this->belongsTo(Programa::class, 'programa');
+    }
 
-	public function clases()
-	{
-		return $this->hasMany(Clase::class, 'materia');
-	}
+    public function clases()
+    {
+        return $this->hasMany(Clase::class, 'materia');
+    }
 }

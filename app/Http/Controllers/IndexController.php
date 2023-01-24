@@ -9,22 +9,23 @@ use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-    public function consultarFiltros() {
+    public function consultarFiltros()
+    {
         $estados = array(
             array(
                 'id' => 'En Propuesta',
                 'nombre' => 'En Propuesta'
             ),
             array(
-                'id' => 'En Propuesta',
+                'id' => 'En Desarrollo',
                 'nombre' => 'En Desarrollo'
             ),
             array(
-                'id' => 'En Propuesta',
+                'id' => 'En Correcciones',
                 'nombre' => 'En Correcciones'
             ),
             array(
-                'id' => 'En Propuesta',
+                'id' => 'Finalizado',
                 'nombre' => 'Finalizado'
             )
         );

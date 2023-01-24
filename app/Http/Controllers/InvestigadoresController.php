@@ -11,7 +11,7 @@ class InvestigadoresController extends Controller
     public function getinvestigadores(Request $request)
     {
         $usuarios = Usuario::select(['usuario.cedula', 'usuario.nombres', 'usuario.apellidos'])
-            ->with('participaciones.clases.materium.programa.facultad')
+            ->with('participaciones.clases.materium.programas.facultad')
             ->whereHas('participaciones');
         $usuarios = FilterQueriesController::retornarFiltros($usuarios, $request, 'investigador');
         if ($usuarios) {
@@ -30,7 +30,7 @@ class InvestigadoresController extends Controller
     public function getInvestigador($id)
     {
         $usuario = Usuario::select(['usuario.*'])
-            ->with('participaciones.clases.materium.programa.facultad')
+            ->with('participaciones.clases.materium.programas.facultad')
             ->where('usuario.cedula', $id);
         if ($usuario) {
             return response()->json([

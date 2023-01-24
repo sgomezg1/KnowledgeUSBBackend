@@ -29,51 +29,51 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Programa extends Model
 {
-	use HasFactory;
+    use HasFactory;
 
-	protected $table = 'programa';
-	public $incrementing = false;
-	public $timestamps = false;
+    protected $table = 'programa';
+    public $incrementing = false;
+    public $timestamps = false;
     protected $hidden = ['pivot'];
 
-	protected $casts = [
-		'id' => 'int',
-		'facultad_id' => 'int'
-	];
+    protected $casts = [
+        'id' => 'int',
+        'facultad_id' => 'int'
+    ];
 
-	protected $fillable = [
-		'nombre',
-		'facultad_id',
-		'director'
-	];
+    protected $fillable = [
+        'nombre',
+        'facultad_id',
+        'director'
+    ];
 
-	public function facultad()
-	{
-		return $this->belongsTo(Facultad::class, 'facultad_id');
-	}
+    public function facultad()
+    {
+        return $this->belongsTo(Facultad::class, 'facultad_id');
+    }
 
-	public function usuario()
-	{
-		return $this->belongsTo(Usuario::class, 'director');
-	}
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class, 'director');
+    }
 
-	public function materia()
-	{
-		return $this->hasMany(Materium::class, 'programa');
-	}
+    public function materia()
+    {
+        return $this->hasMany(Materium::class, 'programa');
+    }
 
-	public function programas_grupos_invs()
-	{
-		return $this->hasMany(ProgramasGruposInv::class, 'programa');
-	}
+    public function programas_grupos_invs()
+    {
+        return $this->hasMany(ProgramasGruposInv::class, 'programa');
+    }
 
-	public function semillerosProgramas()
-	{
-		return $this->belongsToMany(Semillero::class, 'programas_semilleros', 'programa', 'semillero');
-	}
+    public function semillerosProgramas()
+    {
+        return $this->belongsToMany(Semillero::class, 'programas_semilleros', 'programa', 'semillero');
+    }
 
-	public function usuarios()
-	{
-		return $this->hasMany(Usuario::class);
-	}
+    public function usuarios()
+    {
+        return $this->hasMany(Usuario::class);
+    }
 }
