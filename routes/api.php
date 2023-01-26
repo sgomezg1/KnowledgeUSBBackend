@@ -77,7 +77,7 @@ Route::group([
     'middleware' => 'auth:api'
 ], function () {
     Route::get('/elementos-dashboard', [DashboardController::class, 'elementosDashboard']);
-    Route::post('/datos-graficas-finalizados-facultad', [DashboardController::class, 'datosGraficoProyectosFinalizadosPorFacultad']);
-    Route::post('/datos-graficas-grado-semillero-facultad', [DashboardController::class, 'datosProyectoGradoSemilleroPorFacultad']);
-    Route::post('/datos-graficas-presupuesto-proyectos-por-mes', [DashboardController::class, 'datosGraficaPresupuesto']);
+    Route::get('/datos-graficas-finalizados-facultad', [DashboardController::class, 'datosGraficoProyectosFinalizadosPorFacultad']);
+    Route::get('/datos-graficas-grado-semillero-facultad', [DashboardController::class, 'datosProyectoGradoSemilleroPorFacultad']);
+    Route::get('/datos-graficas-presupuesto-proyectos-por-mes', [DashboardController::class, 'datosGraficaPresupuesto']);
 });
