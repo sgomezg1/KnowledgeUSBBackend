@@ -201,6 +201,8 @@ class ReportesController extends Controller
 
     public function generarReportes($nombreReporte, $rolGeneraReporte, $dataReporte, $nombreArchivoPdf, $arrDatosMostrar)
     {
+        ini_set('memory_limit', '-1');
+        set_time_limit(0);
         $data = $dataReporte;
         $user = auth('api')->user();
         $dataHeader = array(
