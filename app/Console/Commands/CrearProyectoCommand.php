@@ -23,6 +23,8 @@ class CrearProyectoCommand extends Command
      */
     protected $signature = 'crear:proyecto
 
+        { --cantidadProyectos= : Cantidad de proyectos a crear }
+
         { --semillero= : ID de semillero a asignar, no obligatorio }
 
         { --tipoProyecto=1 : Asignar o no un tipo de proyecto }
@@ -68,83 +70,85 @@ class CrearProyectoCommand extends Command
      */
     public function handle()
     {
-        $arrPropiedades = array();
+        for ($i = 0; $i < $this->option('cantidadProyectos'); $i++) {
+            $arrPropiedades = array();
 
-        if ($this->option('semillero')) {
-            array_push($arrPropiedades, [
-                'semillero' => $this->option('semillero')
-            ]);
-        }
-
-        if ($this->option('tipoProyecto')) {
-            array_push($arrPropiedades, [
-                'tipo_proyecto' => TipoProyecto::inRandomOrder()->first()->nombre
-            ]);
-        }
-
-        $pro = Proyecto::factory(1)->create();
-        $proyectoCreado = $pro[0];
-
-        if ($this->option('areasConocimiento')) {
-            $areas = AreaConocimiento::inRandomOrder()->limit($this->option('areasConocimiento'))->get();
-            foreach ($areas as $a) {
-                $proyectoCreado->areaConocimientos()->attach($a->id);
-            }
-        }
-
-        if ($this->option('productos')) {
-            Producto::factory($this->option('productos'))->create([
-                'proyecto' => $proyectoCreado->id
-            ]);
-        }
-
-        if ($this->option('antecedentes')) {
-            Antecedente::factory()->create([
-                'proyecto' => $proyectoCreado->id,
-                'ancedente' => $this->option('antecedentes')
-            ]);
-        }
-
-        if ($this->option('presupuestos')) {
-            Presupuesto::factory($this->option('presupuestos'))->create([
-                'proyecto' => $proyectoCreado->id
-            ]);
-        }
-
-        if ($this->option('participaciones')) {
-            $eventos = Evento::inRandomOrder()->limit($this->option('participaciones'))->get();
-            foreach ($eventos as $e) {
-                $proyectoCreado->participaciones()->attach($e->id, [
-                    'fecha_part' => date('Y-m-d'),
-                    'reconocimientos' => 'Prueba'
+            if ($this->option('semillero')) {
+                array_push($arrPropiedades, [
+                    'semillero' => $this->option('semillero')
                 ]);
             }
-        }
 
-        if ($this->option('clases')) {
-            $clases = Clase::inRandomOrder()->limit($this->option('clases'))->get();
-            foreach ($clases as $c) {
-                $proyectoCreado->clases()->attach($c->numero);
-            }
-        }
-
-        if ($this->option('participantes')) {
-            $participantes = Usuario::inRandomOrder()->limit($this->option('participantes'))->get();
-            foreach ($participantes as $p) {
-                $proyectoCreado->participantes()->attach($p->cedula, [
-                    'fecha_inicio' => date('Y-m-d'),
-                    'fecha_fin' => date('Y-m-d'),
-                    'rol' => '',
+            if ($this->option('tipoProyecto')) {
+                array_push($arrPropiedades, [
+                    'tipo_proyecto' => TipoProyecto::inRandomOrder()->first()->nombre
                 ]);
             }
-        }
 
-        if ($this->option('convocatorias')) {
-            $convocatorias = Convocatorium::inRandomOrder()->limit($this->option('convocatorias'))->get();
-            foreach ($convocatorias as $c) {
-                $proyectoCreado->convocatorias()->attach($c->id, [
-                    'id_proyecto' => $proyectoCreado->id
+            $pro = Proyecto::factory(1)->create();
+            $proyectoCreado = $pro[0];
+
+            if ($this->option('areasConocimiento')) {
+                $areas = AreaConocimiento::inRandomOrder()->limit($this->option('areasConocimiento'))->get();
+                foreach ($areas as $a) {
+                    $proyectoCreado->areaConocimientos()->attach($a->id);
+                }
+            }
+
+            if ($this->option('productos')) {
+                Producto::factory($this->option('productos'))->create([
+                    'proyecto' => $proyectoCreado->id
                 ]);
+            }
+
+            if ($this->option('antecedentes')) {
+                Antecedente::factory()->create([
+                    'proyecto' => $proyectoCreado->id,
+                    'ancedente' => $this->option('antecedentes')
+                ]);
+            }
+
+            if ($this->option('presupuestos')) {
+                Presupuesto::factory($this->option('presupuestos'))->create([
+                    'proyecto' => $proyectoCreado->id
+                ]);
+            }
+
+            if ($this->option('participaciones')) {
+                $eventos = Evento::inRandomOrder()->limit($this->option('participaciones'))->get();
+                foreach ($eventos as $e) {
+                    $proyectoCreado->participaciones()->attach($e->id, [
+                        'fecha_part' => date('Y-m-d'),
+                        'reconocimientos' => 'Prueba'
+                    ]);
+                }
+            }
+
+            if ($this->option('clases')) {
+                $clases = Clase::inRandomOrder()->limit($this->option('clases'))->get();
+                foreach ($clases as $c) {
+                    $proyectoCreado->clases()->attach($c->numero);
+                }
+            }
+
+            if ($this->option('participantes')) {
+                $participantes = Usuario::inRandomOrder()->limit($this->option('participantes'))->get();
+                foreach ($participantes as $p) {
+                    $proyectoCreado->participantes()->attach($p->cedula, [
+                        'fecha_inicio' => date('Y-m-d'),
+                        'fecha_fin' => date('Y-m-d'),
+                        'rol' => '',
+                    ]);
+                }
+            }
+
+            if ($this->option('convocatorias')) {
+                $convocatorias = Convocatorium::inRandomOrder()->limit($this->option('convocatorias'))->get();
+                foreach ($convocatorias as $c) {
+                    $proyectoCreado->convocatorias()->attach($c->id, [
+                        'id_proyecto' => $proyectoCreado->id
+                    ]);
+                }
             }
         }
 
