@@ -33,8 +33,6 @@ class CrearProyectoCommand extends Command
 
         { --productos= : Cantidad productos a asignar }
 
-        { --antecedentes= : ID de proyecto a asignar como antecedente }
-
         { --presupuestos= : Cantidad de presupuestos a asignar }
 
         { --participaciones= : Cantidad de participaciones del proyecto en un evento }
@@ -79,11 +77,9 @@ class CrearProyectoCommand extends Command
                 ]);
             }
 
-            if ($this->option('tipoProyecto')) {
-                array_push($arrPropiedades, [
-                    'tipo_proyecto' => TipoProyecto::inRandomOrder()->first()->nombre
-                ]);
-            }
+            array_push($arrPropiedades, [
+                'tipo_proyecto' => TipoProyecto::inRandomOrder()->first()->nombre
+            ]);
 
             $pro = Proyecto::factory(1)->create();
             $proyectoCreado = $pro[0];
@@ -98,13 +94,6 @@ class CrearProyectoCommand extends Command
             if ($this->option('productos')) {
                 Producto::factory($this->option('productos'))->create([
                     'proyecto' => $proyectoCreado->id
-                ]);
-            }
-
-            if ($this->option('antecedentes')) {
-                Antecedente::factory()->create([
-                    'proyecto' => $proyectoCreado->id,
-                    'ancedente' => $this->option('antecedentes')
                 ]);
             }
 

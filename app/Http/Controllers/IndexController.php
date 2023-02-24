@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\AreaConocimiento;
 use App\Models\Facultad;
 use App\Models\Programa;
-use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
     public function consultarFiltros()
     {
+        $authUser = auth()->guard('api')->user();
         $estados = array(
             array(
                 'id' => 'En Propuesta',
@@ -29,8 +29,9 @@ class IndexController extends Controller
                 'nombre' => 'Finalizado'
             )
         );
-        $facultades = Facultad::select(['id', 'nombre'])->get()->toArray();
-        $programas = Programa::select(['id', 'nombre'])->get()->toArray();
+        $facultadUsuarioAutenticado = Programa::select('facultad_id')->where('id', $authUser->programa_id)->first();
+        $facultades = Facultad::select(['id', 'nombre'])->where('id', $facultadUsuarioAutenticado->facultad_id)->get()->toArray();
+        $programas = Programa::select(['id', 'nombre'])->where('facultad_id', $facultadUsuarioAutenticado->facultad_id)->get()->toArray();
         $areasConocimiento = AreaConocimiento::select(['id', 'nombre'])->get()->toArray();
         return response()->json([
             array(
