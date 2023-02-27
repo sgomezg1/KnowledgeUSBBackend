@@ -28,17 +28,19 @@ Route::group([
     Route::group([
         'middleware' => 'auth:api'
     ], function () {
+        Route::get('datos-usu', [UserController::class, 'getDatosUsuNavbar']);
         Route::post('aceptar-politicas', [UserController::class, 'aceptarPoliticas']);
         Route::get('logout', [UserController::class, 'logout']);
         Route::get('user', [UserController::class, 'user']);
     });
 });
 
+Route::get('/filtros/{rol}', [IndexController::class, 'consultarFiltros']);
+
 Route::group([
     'prefix' => '',
     'middlewade' => 'auth:api'
 ], function () {
-    Route::get('/filtros/{rol}', [IndexController::class, 'consultarFiltros']);
     Route::get('/programas', [IndexController::class, 'getProgramas']);
     Route::get('/facultades', [IndexController::class, 'getFacultades']);
 });

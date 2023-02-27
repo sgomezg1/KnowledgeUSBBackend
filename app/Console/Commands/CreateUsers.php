@@ -39,9 +39,21 @@ class CreateUsers extends Command
      */
     public function handle()
     {
-        $roles = TipoUsuario::all();
+        $rol = $this->ask('Ingrese el tipo de rol a asignar a este usuario
+            1. Administrador
+            2. Biblioteca
+            3. Coordinador Investigacion Facultad
+            4. Director de programa
+            5. Docente
+            6. Docente investigador
+            7. Docente lider semillero
+            8. Lider de grupo de investigacion
+            9. Profesional de investigacion
+            10. Visitante
+        ');
+        $roles = TipoUsuario::where('nombre', $rol)->first();
         Usuario::factory()->hasAttached($roles)->create();
-        $this->info("Usuario creado exitosamente con todos los roles\nPor favor revisa la base de datos.\nNo olvides que la contraseña siempre será 'password' para pruebas");
+        $this->info("Usuario creado exitosamente.\nPor favor revisa la base de datos.\nNo olvides que la contraseña siempre será 'password' para pruebas");
         return 0;
     }
 }

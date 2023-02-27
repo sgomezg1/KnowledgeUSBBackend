@@ -14,18 +14,34 @@ use stdClass;
 
 class UserController extends Controller
 {
+    public function getDatosUsuNavbar()
+    {
+        $authUser = auth()->guard('api')->user();
+        $datosUsu = Usuario::select('nombres', 'apellidos')->where('cedula', $authUser->cedula)->first();
+        $usuario = Usuario::with('tipoUsuarios')->where('cedula', $authUser->cedula)->first();
+        $rolUsu = $usuario->tipoUsuarios()->first()->nombre;
+        return response()->json(array(
+            "datos" => $datosUsu,
+            "rol" => $rolUsu
+        ));
+    }
+
     private function intentoLogin(UserRequest $request)
     {
         $success = false;
         $data = new stdClass;
+        $rolUsu = '';
         $credentials = request(['correo_est', 'password']);
         if (Auth::attempt($credentials)) {
             $success = true;
             $data = $request->user();
+            $rol = Usuario::with('tipoUsuarios')->where('cedula', $data->cedula)->first();
+            $rolUsu = $rol->tipoUsuarios()->first()->nombre;
         }
         return array(
             'success' => $success,
-            'data' => $data
+            'data' => $data,
+            'rol' => $rolUsu
         );
     }
 
@@ -37,50 +53,24 @@ class UserController extends Controller
             'mensaje'   => 'Error, usuario o contraseña incorrectas.'
         ], 200);
     }
-
-    public function prevLogin(UserRequest $request)
-    {
-        $user = $this->intentoLogin($request);
-        if ($user['success'])
-            return response()->json([
-                'success' => true,
-                'roles' => $user['data']->tipoUsuarios
-            ], 200);
-        else return $this->retornoCredencialesIncorrectas();
-    }
     public function login(UserRequest $request)
     {
-        $rolLogin = $request->rol;
         $user = $this->intentoLogin($request);
         if ($user['success']) {
-            $hayRol = false;
-            foreach ($user['data']->tipoUsuarios as $u) {
-                $hayRol = ($u->nombre === $rolLogin) ? true : false;
-                if ($hayRol) break;
+            $tokenResult = $user['data']->createToken('Personal Access Token');
+            $token = $tokenResult->token;
+            if ($request->remember_me) {
+                $token->expires_at = Carbon::now()->addWeeks(1);
+                $token->save();
             }
-            if (!$hayRol) {
-                return response()->json([
-                    'success' => false,
-                    'error_code' => 'NO_EXISTING_ROLE',
-                    'mensaje'   => 'El usuario no tiene asignado el rol que seleccionó'
-                ], 400);
-            } else {
-                $tokenResult = $user['data']->createToken('Personal Access Token');
-
-                $token = $tokenResult->token;
-                if ($request->remember_me) {
-                    $token->expires_at = Carbon::now()->addWeeks(1);
-                    $token->save();
-                }
-
-                return response()->json([
-                    'access_token' => $tokenResult->accessToken,
-                    'token_type' => 'Bearer',
-                    'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString(),
-                    'politicas' => $request->user()->acepta_politicas,
-                    'success' => true
-                ], 200);
-            }
+            return response()->json([
+                'access_token' => $tokenResult->accessToken,
+                'token_type' => 'Bearer',
+                'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString(),
+                'politicas' => $request->user()->acepta_politicas,
+                'success' => true,
+                'rol' => $user['rol']
+            ], 200);
         } else return $this->retornoCredencialesIncorrectas();
     }
 
