@@ -95,6 +95,23 @@ class ProgramaSeeder extends Seeder
         Programa::insert(
             [
                 [
+                    'nombre' => 'Administracion de Empresas',
+                    'facultad_id' => Facultad::where('nombre', 'Ciencias Economicas')->first()->id,
+                    'director' => null
+                ],
+                [
+                    'nombre' => 'Contaduria Publica',
+                    'facultad_id' => Facultad::where('nombre', 'Ciencias Economicas')->first()->id,
+                    'director' => null
+                ]
+            ]
+        );
+
+        // Programas Ciencias Jurídicas
+
+        Programa::insert(
+            [
+                [
                     'nombre' => 'Ciencia Política',
                     'facultad_id' => Facultad::where('nombre', 'Ciencias Juridicas')->first()->id,
                     'director' => null
@@ -111,8 +128,5 @@ class ProgramaSeeder extends Seeder
                 ]
             ]
         );
-
-        // Programas Ciencias Jurídicas
-
     }
 }

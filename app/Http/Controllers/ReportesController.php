@@ -105,7 +105,7 @@ class ReportesController extends Controller
         ])->with('clases.materium.programas.facultad');
 
         $busqueda = FilterQueriesController::retornarFiltros($busqueda, $request, 'proyecto');
-        $busqueda->where('proyecto.tipo_proyecto', 'Investigadores Independientes');
+        $busqueda->where('proyecto.tipo_proyecto', 'Inv. Independientes');
         $busqueda = $busqueda->groupBy('proyecto.id');
         $datosMostrar = array(
             'presupuestos' => false,

@@ -18,9 +18,11 @@ class ProyectoFactory extends Factory
     {
         $tiposConocimiento = array('Tacito', 'Implicito');
         $randomNum = rand(0, 1);
+        $estados = array('En Propuesta', 'En Desarrollo', 'En Correcciones', 'Finalizado');
+        $randomEst = rand(0, 3);
         return [
-            'titulo' => $this->faker->title,
-            'estado' => 'En Desarrollo',
+            'titulo' => $this->faker->sentence(2),
+            'estado' => $estados[$randomEst],
             'descripcion' => $this->faker->sentence(3),
             'macro_proyecto' => MacroProyecto::inRandomOrder()->first()->id,
             'fecha_inicio' => date('Y-m-d H:i:s'),

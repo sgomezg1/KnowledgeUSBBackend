@@ -29,7 +29,7 @@ class DashboardController extends Controller
         $proyectosGrado = Proyecto::select('id')->where('tipo_proyecto', 'Trabajo de Grado')->count();
         $proyectosSemillero = Proyecto::select('id')->whereNotNull('semillero')->count();
         $proyectosConvocatoria = Proyecto::select('id')->whereHas('convocatorias')->count();
-        $proyectosInvIndependientes = Proyecto::select('id')->where('tipo_proyecto', 'Investigadores Independientes')->count();
+        $proyectosInvIndependientes = Proyecto::select('id')->where('tipo_proyecto', 'Inv. Independientes')->count();
         $proyectosPresupuesto = Proyecto::select('id')->whereHas('presupuestos')->count();
         $proyectosTacito = Proyecto::select('proyecto.id')->where('tipo_conocimiento', 'Tacito')->count();
         $proyectosImplicito = Proyecto::select('proyecto.id')->where('tipo_conocimiento', 'Implicito')->count();
