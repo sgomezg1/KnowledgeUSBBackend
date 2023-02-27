@@ -8,7 +8,7 @@ use App\Models\Programa;
 
 class IndexController extends Controller
 {
-    public function consultarFiltros()
+    public function consultarFiltros($rol)
     {
         $authUser = auth()->guard('api')->user();
         $estados = array(
@@ -29,9 +29,14 @@ class IndexController extends Controller
                 'nombre' => 'Finalizado'
             )
         );
-        $facultadUsuarioAutenticado = Programa::select('facultad_id')->where('id', $authUser->programa_id)->first();
-        $facultades = Facultad::select(['id', 'nombre'])->where('id', $facultadUsuarioAutenticado->facultad_id)->get()->toArray();
-        $programas = Programa::select(['id', 'nombre'])->where('facultad_id', $facultadUsuarioAutenticado->facultad_id)->get()->toArray();
+        if ($rol === 'Administrador') {
+            $facultades = Facultad::select('id', 'nombre')->get()->toArray();
+            $programas = Programa::select('id', 'nombre')->get()->toArray();
+        } else {
+            $facultadUsuarioAutenticado = Programa::select('facultad_id')->where('id', $authUser->programa_id)->first();
+            $facultades = Facultad::select(['id', 'nombre'])->where('id', $facultadUsuarioAutenticado->facultad_id)->get()->toArray();
+            $programas = Programa::select(['id', 'nombre'])->where('facultad_id', $facultadUsuarioAutenticado->facultad_id)->get()->toArray();
+        }
         $areasConocimiento = AreaConocimiento::select(['id', 'nombre'])->get()->toArray();
         return response()->json([
             array(

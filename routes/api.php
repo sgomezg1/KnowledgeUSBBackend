@@ -38,7 +38,7 @@ Route::group([
     'prefix' => '',
     'middlewade' => 'auth:api'
 ], function () {
-    Route::get('/filtros', [IndexController::class, 'consultarFiltros']);
+    Route::get('/filtros/{rol}', [IndexController::class, 'consultarFiltros']);
     Route::get('/programas', [IndexController::class, 'getProgramas']);
     Route::get('/facultades', [IndexController::class, 'getFacultades']);
 });
