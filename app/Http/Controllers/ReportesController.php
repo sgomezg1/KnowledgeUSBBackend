@@ -5,11 +5,46 @@ namespace App\Http\Controllers;
 use App\Models\Proyecto;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ReportesController extends Controller
 {
+    public function procesarProgramasRespuesta($proyectos)
+    {
+        $programas = array();
+        foreach ($proyectos as $pC) {
+            foreach ($pC->clases()->get() as $c) {
+                $progId = $c->materium()->first()->programas()->first()->id;
+                if (!in_array($progId, array_column($programas, 'id'))) {
+                    $arrayInsertar = array(
+                        "id" => $progId,
+                        "programa" => $c->materium()->first()->programas()->first()->nombre
+                    );
+                    array_push($programas, $arrayInsertar);
+                }
+            }
+            $pC->programas = $programas;
+        }
+    }
+
+    public function procesarFacultadesRespuesta($proyectos)
+    {
+        $facultades = array();
+        foreach ($proyectos as $pC) {
+            foreach ($pC->clases()->get() as $c) {
+                $facId = $c->materium()->first()->programas()->first()->facultad()->first()->id;
+                if (!in_array($facId, array_column($facultades, 'id'))) {
+                    $arrayInsertar = array(
+                        "id" => $facId,
+                        "facultad" => $c->materium()->first()->programas()->first()->facultad()->first()->nombre
+                    );
+                    array_push($facultades, $arrayInsertar);
+                }
+            }
+            $pC->facultades = $facultades;
+        }
+    }
+
     public function proyectosConPresupuesto(Request $request)
     {
         $busqueda = Proyecto::select([
@@ -181,7 +216,8 @@ class ReportesController extends Controller
     public function retornoRespuestaReporte($busqueda, $nombreReporte, $rolGeneraReporte, $nombreArchivoPdf, $arrDatosMostrar)
     {
         if ($busqueda) {
-
+            $this->procesarProgramasRespuesta($busqueda->get());
+            $this->procesarFacultadesRespuesta($busqueda->get());
             $ruta = $this->generarReportes($nombreReporte, $rolGeneraReporte, $busqueda->get(), $nombreArchivoPdf . date('Y_m_d_h_i_s'), $arrDatosMostrar);
             return response()->json([
                 'success' => true,
